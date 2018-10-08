@@ -16,6 +16,7 @@ namespace phys
         vec3 operator -(float value);
         vec3 operator *(float value);
         vec3 operator /(float value);
+        bool operator ==(const vec3 rhs) const;
 
         float getX() const;
         float getY() const;

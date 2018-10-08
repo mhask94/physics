@@ -60,6 +60,11 @@ namespace phys
         return vec3{this->m_x/value,this->m_y/value,this->m_z/value};
     }
 
+    bool vec3::operator ==(const vec3 rhs) const
+    {
+        return (this->m_x==rhs.m_x && this->m_y==rhs.m_y && this->m_z==rhs.m_z);
+    }
+
     vec3 operator+(float lhs, vec3 rhs)
     {
         return rhs + lhs;
