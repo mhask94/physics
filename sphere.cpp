@@ -19,11 +19,11 @@ namespace phys
     {
     }
 
-    void Sphere::update()
+    void Sphere::update(float dt,vec3 gravity,float density)
     {
-        m_acceleration = m_gravity + 0.0;
-        m_velocity = m_velocity + m_acceleration*m_dt;
-        m_position = m_position + m_velocity*m_dt;
+        m_acceleration = gravity + 0.0;
+        m_velocity = m_velocity + m_acceleration*dt;
+        m_position = m_position + m_velocity*dt;
     }
 
     vec3 Sphere::getPosition() const
@@ -41,10 +41,10 @@ namespace phys
         return m_acceleration;
     }
 
-    void Sphere::setAcceleration(const vec3 &acceleration)
-    {
-        m_acceleration = acceleration;
-    }
+//    void Sphere::setAcceleration(const vec3 &acceleration)
+//    {
+//        m_acceleration = acceleration;
+//    }
 
     float Sphere::getMass() const
     {

@@ -53,7 +53,7 @@ namespace phys
     {
         for (unsigned int i{0}; i < m_num_spheres; i++)
         {
-            m_spheres[i]->update();
+            m_spheres[i]->update(m_dt,m_gravity,m_density);
         }
     }
 

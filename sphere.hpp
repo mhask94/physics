@@ -5,18 +5,18 @@
 
 namespace phys
 {
-    class Sphere : protected World
+    class Sphere
     {
     public:
         Sphere(float mass,vec3 position);
         Sphere(float mass,vec3 position,vec3 velocity);
         ~Sphere();
         float getMass() const;
-        void update();
+        void update(float dt,vec3 gravity,float density);
         vec3 getPosition() const;
         vec3 getVelocity() const;
         vec3 getAcceleration() const;
-        void setAcceleration(const vec3 &acceleration);
+//        void setAcceleration(const vec3 &acceleration);
 
     private:
         float m_mass{1};

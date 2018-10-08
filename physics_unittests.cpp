@@ -15,7 +15,11 @@ TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
     phys::vec3 init_pos{0,0,0};
     phys::vec3 init_vel{0,0,0};
     phys::Sphere sphere{mass,init_pos,init_vel};
-    sphere.update();
+
+    float dt{0.1};
+    phys::vec3 gravity{0,0,0};
+    float density{0};
+    sphere.update(dt,gravity,density);
 
     phys::vec3 expected_pos{0,0,0};
 
@@ -28,9 +32,12 @@ TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
     phys::vec3 init_pos{0,0,0};
     phys::vec3 init_vel{1,0,0};
     phys::Sphere sphere{mass,init_pos,init_vel};
-    sphere.update();
 
     float dt{0.1};
+    phys::vec3 gravity{0,0,0};
+    float density{0};
+    sphere.update(dt,gravity,density);
+
     phys::vec3 expected_pos{0,0,0};
     expected_pos = init_pos + init_vel*dt;
 
@@ -39,7 +46,7 @@ TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
     phys::vec3 init_pos2{-1,0,1};
     phys::vec3 init_vel2{1,-1,0};
     phys::Sphere sphere2{mass,init_pos2,init_vel2};
-    sphere2.update();
+    sphere2.update(dt,gravity,density);
 
     phys::vec3 expected_pos2{0,0,0};
     expected_pos2 = init_pos2 + init_vel2*dt;
@@ -53,16 +60,15 @@ TEST(SphereWithGravityAndNoVelocity,AskedToUpdate_UpdatesCorrectly)
     phys::vec3 init_pos{0,10,0};
     phys::vec3 gravity{0,-9.81,0};
     phys::Sphere sphere{mass,init_pos};
-    sphere.setAcceleration(gravity);
-    sphere.update();
+
+    float dt{0.1};
+    float density{0};
+    sphere.update(dt,gravity,density);
 
     phys::vec3 expected_pos{0,0,0};
     phys::vec3 expected_vel{0,0,0};
-    float dt{0.1};
     expected_vel = gravity*dt;
     expected_pos = init_pos + expected_vel*dt;
-
-    phys::vec3 actual_pos = sphere.getPosition();
 
     EXPECT_TRUE(vec3ExpectNear(expected_pos,sphere.getPosition(),.001f));
 }
