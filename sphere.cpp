@@ -21,7 +21,7 @@ namespace phys
 
     void Sphere::update()
     {
-        m_acceleration = m_acceleration + ;
+        m_acceleration = m_gravity + 0.0;
         m_velocity = m_velocity + m_acceleration*m_dt;
         m_position = m_position + m_velocity*m_dt;
     }
@@ -49,15 +49,5 @@ namespace phys
     float Sphere::getMass() const
     {
         return m_mass;
-    }
-
-    float Sphere::getDt() const
-    {
-        return m_dt;
-    }
-
-    void Sphere::setDt(float dt)
-    {
-        m_dt = dt;
     }
 }

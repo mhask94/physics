@@ -25,6 +25,16 @@ namespace phys
         return m_z;
     }
 
+    vec3 vec3::abs(vec3 vector)
+    {
+        phys::vec3 new_vector{0,0,0};
+        new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
+        new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
+        new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
+
+        return new_vector;
+    }
+
     vec3 vec3::operator +(vec3 rhs)
     {
         return vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};

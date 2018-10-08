@@ -21,6 +21,7 @@ namespace phys
         float getX() const;
         float getY() const;
         float getZ() const;
+        static vec3 abs(vec3 vector);
 
     private:
         float m_x{0};

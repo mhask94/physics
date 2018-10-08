@@ -13,6 +13,8 @@ IF (NOT TARGET gtest)
 ENDIF()
 
 add_library(Physics STATIC
+    world.hpp
+    world.cpp
     sphere.hpp
     sphere.cpp
     vec3.hpp
