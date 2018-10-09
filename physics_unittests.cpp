@@ -90,6 +90,8 @@ TEST(WorldWithSphere,AskedForNumberOfSpheres_ReturnsOne)
     world.addSphere(sphere);
 
     EXPECT_EQ(1,world.getNumSpheres());
+
+    delete sphere;
 }
 
 TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
@@ -115,6 +117,9 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 
     EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
     EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
+
+    delete sphere1;
+    delete sphere2;
 }
 
 TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
@@ -144,4 +149,7 @@ TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 
     EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
     EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
+
+    delete sphere1;
+    delete sphere2;
 }
