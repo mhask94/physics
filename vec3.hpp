@@ -3,27 +3,32 @@
 
 namespace phys
 {
-    class vec3
+    class Vec3
     {
     public:
-        vec3();
-        vec3(float getX,float y,float z);
+        Vec3();
+        Vec3(float x,float y,float z);
 
-        vec3 operator +(vec3 rhs);
-        vec3 operator -(vec3 rhs);
-        vec3 operator *(vec3 rhs);
-        vec3 operator *=(vec3 rhs);
-        vec3 operator -();
-        vec3 operator +(float value);
-        vec3 operator -(float value);
-        vec3 operator *(float value);
-        vec3 operator /(float value);
-        bool operator ==(const vec3 rhs) const;
+        Vec3 operator +(Vec3 rhs);
+        Vec3 operator -(Vec3 rhs);
+        Vec3 operator *(Vec3 rhs);
+        void operator +=(Vec3 rhs);
+        void operator -=(Vec3 rhs);
+        void operator *=(Vec3 rhs);
+        Vec3 operator -();
+        Vec3 operator +(float value);
+        Vec3 operator -(float value);
+        Vec3 operator *(float value);
+        Vec3 operator /(float value);
+        bool operator ==(const Vec3 rhs) const;
 
         float getX() const;
         float getY() const;
         float getZ() const;
-        static vec3 abs(vec3 vector);
+        int signX();
+        int signY();
+        int signZ();
+        static Vec3 abs(Vec3 vector);
 
     private:
         float m_x{0};
@@ -31,8 +36,8 @@ namespace phys
         float m_z{0};
     };
 
-    vec3 operator +(float lhs, vec3 rhs);
-    vec3 operator -(float lhs, vec3 rhs);
-    vec3 operator *(float lhs, vec3 rhs);
+    Vec3 operator +(float lhs, Vec3 rhs);
+    Vec3 operator -(float lhs, Vec3 rhs);
+    Vec3 operator *(float lhs, Vec3 rhs);
 }
 #endif // VEC3_H

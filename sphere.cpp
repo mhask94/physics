@@ -2,7 +2,7 @@
 
 namespace phys
 {
-    Sphere::Sphere(float radius,float mass,vec3 position):
+    Sphere::Sphere(float radius,float mass,Vec3 position):
         m_radius{radius},
         m_mass{mass},
         m_position{position},
@@ -10,7 +10,7 @@ namespace phys
     {
     }
 
-    Sphere::Sphere(float radius,float mass,vec3 position,vec3 velocity):
+    Sphere::Sphere(float radius,float mass,Vec3 position,Vec3 velocity):
         m_radius{radius},
         m_mass{mass},
         m_position{position},
@@ -23,32 +23,53 @@ namespace phys
     {
     }
 
-    void Sphere::update(float dt,vec3 acceleration)
+    void Sphere::update(float dt,Vec3 acceleration)
+    {
+        m_acceleration = acceleration;
+        m_velocity = m_velocity + m_acceleration*dt;
+        m_position = m_position + m_velocity*dt;
+    }
+
+    void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
     {
         m_acceleration = acceleration;
         m_velocity = m_velocity + m_acceleration*dt;
         m_position = m_position + m_velocity*dt;
 
-        if (m_position.getX() > 5.f-m_radius || m_position.getX() < -5.f+m_radius)
-            m_velocity *= vec3{-1,1,1}*m_coef_restitution;
-        if (m_position.getY() > 5-m_radius || m_position.getY() < -5+m_radius)
-            m_velocity *= vec3{1,-1,1}*m_coef_restitution;
-        if (m_position.getZ() > 5-m_radius || m_position.getZ() < -5+m_radius)
-            m_velocity *= vec3{1,1,-1}*m_coef_restitution;
-
+        if (m_position.getX() > box->max_x-m_radius || m_position.getX() < box->min_x+m_radius)
+        {
+            float dist_out;
+            dist_out = (m_position.getX()>0) ? dist_out=m_position.getX()+m_radius-box->max_x : dist_out=m_position.getX()-m_radius-box->min_x;
+            m_position -= Vec3{dist_out,0.f,0.f};
+            m_velocity *= Vec3{-1.f,1.f,1.f}*m_coef_restitution;
+        }
+        if (m_position.getY() > box->max_y-m_radius || m_position.getY() < box->min_y+m_radius)
+        {
+            float dist_out;
+            dist_out = (m_position.getY()>0) ? dist_out=m_position.getY()+m_radius-box->max_y : dist_out=m_position.getY()-m_radius-box->min_y;
+            m_position -= Vec3{0.f,dist_out,0.f};
+            m_velocity *= Vec3{1.f,-1.f,1.f}*m_coef_restitution;
+        }
+        if (m_position.getZ() > box->max_z-m_radius || m_position.getZ() < box->min_z+m_radius)
+        {
+            float dist_out;
+            dist_out = (m_position.getZ()>0) ? dist_out=m_position.getZ()+m_radius-box->max_z : dist_out=m_position.getZ()-m_radius-box->min_z;
+            m_position -= Vec3{0.f,0.f,dist_out};
+            m_velocity *= Vec3{1.f,1.f,-1.f}*m_coef_restitution;
+        }
     }
 
-    vec3 Sphere::getPosition() const
+    Vec3 Sphere::getPosition() const
     {
         return m_position;
     }
 
-    vec3 Sphere::getVelocity() const
+    Vec3 Sphere::getVelocity() const
     {
         return m_velocity;
     }
 
-    vec3 Sphere::getAcceleration() const
+    Vec3 Sphere::getAcceleration() const
     {
         return m_acceleration;
     }
@@ -57,11 +78,6 @@ namespace phys
     {
         return m_drag_coef;
     }
-
-    //    void Sphere::setAcceleration(const vec3 &acceleration)
-    //    {
-    //        m_acceleration = acceleration;
-//    }
 
     float Sphere::getMass() const
     {

@@ -10,22 +10,27 @@ namespace phys
     struct Boundary
     {
     public:
-        float max_x{5};
-        float min_x{-5};
-        float max_y{5};
-        float min_y{-5};
-        float max_z{5};
-        float min_z{-5};
+        Boundary(float dim) :
+            max_x{dim}, max_y{dim}, max_z{dim}, min_x{-dim}, min_y{-dim}, min_z{-dim} {}
+        Boundary(float x,float y,float z) :
+            max_x{x}, max_y{y}, max_z{z}, min_x{-x}, min_y{-y}, min_z{-z} {}
+        float max_x{0};
+        float min_x{0};
+        float max_y{0};
+        float min_y{0};
+        float max_z{0};
+        float min_z{0};
     };
 
     class World
     {
     public:
         World();
-        World(vec3 gravity,float density);
+        World(Vec3 gravity);
+        World(Vec3 gravity,float density);
         ~World();
-        vec3 getGravity() const;
-        void setGravity(const vec3 &gravity);
+        Vec3 getGravity() const;
+        void setGravity(const Vec3 &gravity);
         float getDensity() const;
         void setDensity(float density);
         void addSphere(Sphere* sphere);
@@ -36,10 +41,10 @@ namespace phys
         void updateDynamics(Sphere* sphere);
 
     protected:
-        vec3 m_gravity{0,0,0};
+        Vec3 m_gravity{0,0,0};
         float m_density{0};
         float m_dt{0.1};
-        phys::Boundary m_boundary;
+        Boundary *m_boundary{new Boundary{5.f}};
 
     private:
         unsigned int m_num_spheres{0};

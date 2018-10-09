@@ -8,7 +8,12 @@ namespace phys
     {
     }
 
-    World::World(vec3 gravity, float density):
+    World::World(Vec3 gravity):
+        m_gravity{gravity}
+    {
+    }
+
+    World::World(Vec3 gravity, float density):
         m_gravity{gravity},
         m_density{density}
     {
@@ -16,14 +21,15 @@ namespace phys
 
     World::~World()
     {
+        delete m_boundary;
     }
 
-    vec3 World::getGravity() const
+    Vec3 World::getGravity() const
     {
         return m_gravity;
     }
 
-    void World::setGravity(const vec3 &gravity)
+    void World::setGravity(const Vec3 &gravity)
     {
         m_gravity = gravity;
     }
@@ -53,7 +59,7 @@ namespace phys
     {
         for (unsigned int i{0}; i < m_num_spheres; i++)
         {
-            m_spheres[i]->update(m_dt,m_gravity);
+            m_spheres[i]->update(m_dt,m_gravity,m_boundary);
         }
     }
 
@@ -69,10 +75,10 @@ namespace phys
 
     void World::updateDynamics(Sphere* sphere)
     {
-        vec3 drag_force{0,0,0};
+        Vec3 drag_force{0,0,0};
         drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef();
-        vec3 acc{0,0,0};
+        Vec3 acc{0,0,0};
         acc = m_gravity + drag_force;
-        sphere->update(m_dt,acc);
+        sphere->update(m_dt,acc,m_boundary);
     }
 }

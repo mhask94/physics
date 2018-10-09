@@ -2,32 +2,49 @@
 
 namespace phys
 {
+    Vec3::Vec3(){}
 
-    vec3::vec3(){}
-
-    vec3::vec3(float x,float y,float z):
+    Vec3::Vec3(float x,float y,float z):
         m_x{x}, m_y{y}, m_z{z}
     {
     }
 
-    float vec3::getX() const
+    float Vec3::getX() const
     {
         return m_x;
     }
 
-    float vec3::getY() const
+    float Vec3::getY() const
     {
         return m_y;
     }
 
-    float vec3::getZ() const
+    float Vec3::getZ() const
     {
         return m_z;
     }
 
-    vec3 vec3::abs(vec3 vector)
+    int Vec3::signX()
     {
-        phys::vec3 new_vector{0,0,0};
+        int x{0};
+        return x = (this->getX() < 0) ? x=-1 : x=1;
+    }
+
+    int Vec3::signY()
+    {
+        int y{0};
+        return y = (this->getY() < 0) ? y=-1 : y=1;
+    }
+
+    int Vec3::signZ()
+    {
+        int z{0};
+        return z = (this->getZ() < 0) ? z=-1 : z=1;
+    }
+
+    Vec3 Vec3::abs(Vec3 vector)
+    {
+        Vec3 new_vector{0,0,0};
         new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
         new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
         new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
@@ -35,68 +52,77 @@ namespace phys
         return new_vector;
     }
 
-    vec3 vec3::operator +(vec3 rhs)
+    Vec3 Vec3::operator +(Vec3 rhs)
     {
-        return vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};
+        return Vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};
     }
 
-    vec3 vec3::operator +(float value)
+    Vec3 Vec3::operator +(float value)
     {
-        return vec3{this->m_x+value,this->m_y+value,this->m_z+value};
+        return Vec3{this->m_x+value,this->m_y+value,this->m_z+value};
     }
 
-    vec3 vec3::operator -(vec3 rhs)
+    Vec3 Vec3::operator -(Vec3 rhs)
     {
-        return vec3{this->m_x-rhs.m_x,this->m_y-rhs.m_y,this->m_z-rhs.m_z};
+        return Vec3{this->m_x-rhs.m_x,this->m_y-rhs.m_y,this->m_z-rhs.m_z};
     }
 
-    vec3 vec3::operator *(vec3 rhs)
+    Vec3 Vec3::operator *(Vec3 rhs)
     {
-        return vec3{this->m_x*rhs.m_x,this->m_y*rhs.m_y,this->m_z*rhs.m_z};
+        return Vec3{this->m_x*rhs.m_x,this->m_y*rhs.m_y,this->m_z*rhs.m_z};
     }
 
-    vec3 vec3::operator *=(vec3 rhs)
+    void Vec3::operator +=(Vec3 rhs)
     {
-        vec3 test{(*this)*rhs};
-        return test; //TODO not working right
+        *this = (*this) + rhs;
     }
 
-    vec3 vec3::operator -()
+    void Vec3::operator -=(Vec3 rhs)
     {
-        return vec3{-this->m_x,-this->m_y,-this->m_z};
+        *this = (*this) - rhs;
     }
 
-    vec3 vec3::operator -(float value)
+    void Vec3::operator *=(Vec3 rhs)
     {
-        return vec3{this->m_x+value,this->m_y+value,this->m_z+value};
+        *this = (*this) * rhs;
     }
 
-    vec3 vec3::operator *(float value)
+    Vec3 Vec3::operator -()
     {
-        return vec3{this->m_x*value,this->m_y*value,this->m_z*value};
+        return Vec3{-this->m_x,-this->m_y,-this->m_z};
     }
 
-    vec3 vec3::operator /(float value)
+    Vec3 Vec3::operator -(float value)
     {
-        return vec3{this->m_x/value,this->m_y/value,this->m_z/value};
+        return Vec3{this->m_x+value,this->m_y+value,this->m_z+value};
     }
 
-    bool vec3::operator ==(const vec3 rhs) const
+    Vec3 Vec3::operator *(float value)
+    {
+        return Vec3{this->m_x*value,this->m_y*value,this->m_z*value};
+    }
+
+    Vec3 Vec3::operator /(float value)
+    {
+        return Vec3{this->m_x/value,this->m_y/value,this->m_z/value};
+    }
+
+    bool Vec3::operator ==(const Vec3 rhs) const
     {
         return (this->m_x==rhs.m_x && this->m_y==rhs.m_y && this->m_z==rhs.m_z);
     }
 
-    vec3 operator+(float lhs, vec3 rhs)
+    Vec3 operator+(float lhs, Vec3 rhs)
     {
         return rhs + lhs;
     }
 
-    vec3 operator-(float lhs, vec3 rhs)
+    Vec3 operator-(float lhs, Vec3 rhs)
     {
         return -rhs + lhs;
     }
 
-    vec3 operator *(float lhs, vec3 rhs)
+    Vec3 operator *(float lhs, Vec3 rhs)
     {
         return rhs * lhs;
     }
