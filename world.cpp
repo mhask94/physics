@@ -53,7 +53,7 @@ namespace phys
     {
         for (unsigned int i{0}; i < m_num_spheres; i++)
         {
-            m_spheres[i]->update(m_dt,m_gravity,m_density);
+            m_spheres[i]->update(m_dt,m_gravity);
         }
     }
 
@@ -65,5 +65,14 @@ namespace phys
     void World::setDt(float dt)
     {
         m_dt = dt;
+    }
+
+    void World::updateDynamics(Sphere* sphere)
+    {
+        vec3 drag_force{0,0,0};
+        drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef();
+        vec3 acc{0,0,0};
+        acc = m_gravity + drag_force;
+        sphere->update(m_dt,acc);
     }
 }

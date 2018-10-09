@@ -11,15 +11,15 @@ bool vec3ExpectNear(phys::vec3 a,phys::vec3 b,float delta)
 
 TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos{0,0,0};
     phys::vec3 init_vel{0,0,0};
-    phys::Sphere sphere{mass,init_pos,init_vel};
+    phys::Sphere sphere{radius,mass,init_pos,init_vel};
 
     float dt{0.1};
     phys::vec3 gravity{0,0,0};
-    float density{0};
-    sphere.update(dt,gravity,density);
+    sphere.update(dt,gravity);
 
     phys::vec3 expected_pos{0,0,0};
 
@@ -28,15 +28,15 @@ TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 
 TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos{0,0,0};
     phys::vec3 init_vel{1,0,0};
-    phys::Sphere sphere{mass,init_pos,init_vel};
+    phys::Sphere sphere{radius,mass,init_pos,init_vel};
 
     float dt{0.1};
     phys::vec3 gravity{0,0,0};
-    float density{0};
-    sphere.update(dt,gravity,density);
+    sphere.update(dt,gravity);
 
     phys::vec3 expected_pos{0,0,0};
     expected_pos = init_pos + init_vel*dt;
@@ -45,8 +45,8 @@ TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
 
     phys::vec3 init_pos2{-1,0,1};
     phys::vec3 init_vel2{1,-1,0};
-    phys::Sphere sphere2{mass,init_pos2,init_vel2};
-    sphere2.update(dt,gravity,density);
+    phys::Sphere sphere2{radius,mass,init_pos2,init_vel2};
+    sphere2.update(dt,gravity);
 
     phys::vec3 expected_pos2{0,0,0};
     expected_pos2 = init_pos2 + init_vel2*dt;
@@ -56,14 +56,14 @@ TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
 
 TEST(SphereWithGravityAndNoVelocity,AskedToUpdate_UpdatesCorrectly)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos{0,10,0};
     phys::vec3 gravity{0,-9.81,0};
-    phys::Sphere sphere{mass,init_pos};
+    phys::Sphere sphere{radius,mass,init_pos};
 
     float dt{0.1};
-    float density{0};
-    sphere.update(dt,gravity,density);
+    sphere.update(dt,gravity);
 
     phys::vec3 expected_pos{0,0,0};
     phys::vec3 expected_vel{0,0,0};
@@ -81,10 +81,11 @@ TEST(EmptyWorld,AskedForNumberOfSpheres_ReturnsZero)
 
 TEST(WorldWithSphere,AskedForNumberOfSpheres_ReturnsOne)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos{0,0,0};
     phys::Sphere *sphere{nullptr};
-    sphere = new phys::Sphere{mass,init_pos};
+    sphere = new phys::Sphere{radius,mass,init_pos};
 
     phys::World world;
     world.addSphere(sphere);
@@ -96,16 +97,17 @@ TEST(WorldWithSphere,AskedForNumberOfSpheres_ReturnsOne)
 
 TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos1{0,0,0};
     phys::vec3 init_vel1{1,-1,0};
     phys::Sphere *sphere1{nullptr};
-    sphere1 = new phys::Sphere{mass,init_pos1,init_vel1};
+    sphere1 = new phys::Sphere{radius,mass,init_pos1,init_vel1};
 
     phys::vec3 init_pos2{5,5,5};
     phys::vec3 init_vel2{0,10,-10};
     phys::Sphere *sphere2{nullptr};
-    sphere2 = new phys::Sphere{mass,init_pos2,init_vel2};
+    sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
     phys::World world;
     world.addSphere(sphere1);
@@ -124,16 +126,17 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 
 TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 {
+    float radius{1};
     float mass{1};
     phys::vec3 init_pos1{0,0,0};
     phys::vec3 init_vel1{0,0,0};
     phys::Sphere *sphere1{nullptr};
-    sphere1 = new phys::Sphere{mass,init_pos1,init_vel1};
+    sphere1 = new phys::Sphere{radius,mass,init_pos1,init_vel1};
 
     phys::vec3 init_pos2{5,5,5};
     phys::vec3 init_vel2{0,10,-10};
     phys::Sphere *sphere2{nullptr};
-    sphere2 = new phys::Sphere{mass,init_pos2,init_vel2};
+    sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
     phys::vec3 gravity{0,-9.81,0};
     float density{0};

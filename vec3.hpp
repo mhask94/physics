@@ -11,6 +11,8 @@ namespace phys
 
         vec3 operator +(vec3 rhs);
         vec3 operator -(vec3 rhs);
+        vec3 operator *(vec3 rhs);
+        vec3 operator *=(vec3 rhs);
         vec3 operator -();
         vec3 operator +(float value);
         vec3 operator -(float value);
@@ -31,5 +33,6 @@ namespace phys
 
     vec3 operator +(float lhs, vec3 rhs);
     vec3 operator -(float lhs, vec3 rhs);
+    vec3 operator *(float lhs, vec3 rhs);
 }
 #endif // VEC3_H

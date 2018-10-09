@@ -50,6 +50,17 @@ namespace phys
         return vec3{this->m_x-rhs.m_x,this->m_y-rhs.m_y,this->m_z-rhs.m_z};
     }
 
+    vec3 vec3::operator *(vec3 rhs)
+    {
+        return vec3{this->m_x*rhs.m_x,this->m_y*rhs.m_y,this->m_z*rhs.m_z};
+    }
+
+    vec3 vec3::operator *=(vec3 rhs)
+    {
+        vec3 test{(*this)*rhs};
+        return test; //TODO not working right
+    }
+
     vec3 vec3::operator -()
     {
         return vec3{-this->m_x,-this->m_y,-this->m_z};
@@ -84,4 +95,10 @@ namespace phys
     {
         return -rhs + lhs;
     }
+
+    vec3 operator *(float lhs, vec3 rhs)
+    {
+        return rhs * lhs;
+    }
+
 }
