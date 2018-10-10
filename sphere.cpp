@@ -23,19 +23,8 @@ namespace phys
     {
     }
 
-    void Sphere::update(float dt,Vec3 acceleration)
+    void Sphere::handleBoundaryCollision(Boundary* box)
     {
-        m_acceleration = acceleration;
-        m_velocity = m_velocity + m_acceleration*dt;
-        m_position = m_position + m_velocity*dt;
-    }
-
-    void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
-    {
-        m_acceleration = acceleration;
-        m_velocity = m_velocity + m_acceleration*dt;
-        m_position = m_position + m_velocity*dt;
-
         if (m_position.getX() > box->max_x-m_radius || m_position.getX() < box->min_x+m_radius)
         {
             float dist_out;
@@ -57,6 +46,16 @@ namespace phys
             m_position -= Vec3{0.f,0.f,dist_out};
             m_velocity *= Vec3{1.f,1.f,-1.f}*m_coef_restitution;
         }
+    }
+
+    void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
+    {
+        m_acceleration = acceleration;
+        m_velocity = m_velocity + m_acceleration*dt;
+        m_position = m_position + m_velocity*dt;
+
+        if (box != nullptr)
+            handleBoundaryCollision(box);
     }
 
     Vec3 Sphere::getPosition() const

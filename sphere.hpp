@@ -12,8 +12,7 @@ namespace phys
         Sphere(float radius,float mass,Vec3 position,Vec3 velocity);
         ~Sphere();
         float getMass() const;
-        void update(float dt,Vec3 acceleration);
-        void update(float dt,Vec3 acceleration,Boundary* box);
+        void update(float dt,Vec3 acceleration,Boundary* box=nullptr);
         Vec3 getPosition() const;
         Vec3 getVelocity() const;
         Vec3 getAcceleration() const;
@@ -27,6 +26,7 @@ namespace phys
         Vec3 m_acceleration{0,0,0};
         float m_coef_restitution{0.8};
         float m_drag_coef{0};
+        void handleBoundaryCollision(Boundary* box);
     };
 }
 
