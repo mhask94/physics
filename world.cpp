@@ -8,15 +8,32 @@ namespace phys
     {
     }
 
+    World::World(Boundary* box):
+        m_boundary{box}
+    {
+    }
+
     World::World(Vec3 gravity):
         m_gravity{gravity}
     {
     }
 
+    World::World(Vec3 gravity,Boundary* box):
+        m_gravity{gravity},
+        m_boundary{box}
+    {
+    }
+
     World::World(Vec3 gravity, float density):
         m_gravity{gravity},
+        m_density{density}
+    {
+    }
+
+    World::World(Vec3 gravity, float density,Boundary* box):
+        m_gravity{gravity},
         m_density{density},
-        m_boundary{new Boundary{5.f}}
+        m_boundary{box}
     {
     }
 

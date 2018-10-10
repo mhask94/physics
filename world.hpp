@@ -26,8 +26,11 @@ namespace phys
     {
     public:
         World();
+        World(Boundary* box);
         World(Vec3 gravity);
+        World(Vec3 gravity,Boundary* box);
         World(Vec3 gravity,float density);
+        World(Vec3 gravity,float density,Boundary* box);
         ~World();
         Vec3 getGravity() const;
         void setGravity(const Vec3 &gravity);
