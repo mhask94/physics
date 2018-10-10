@@ -15,13 +15,16 @@ namespace phys
 
     World::World(Vec3 gravity, float density):
         m_gravity{gravity},
-        m_density{density}
+        m_density{density},
+        m_boundary{new Boundary{5.f}}
     {
     }
 
     World::~World()
     {
-        delete m_boundary;
+        if (m_boundary != nullptr)
+            delete m_boundary;
+        m_boundary = nullptr;
     }
 
     Vec3 World::getGravity() const
@@ -80,5 +83,10 @@ namespace phys
         Vec3 acc{0,0,0};
         acc = m_gravity + drag_force;
         sphere->update(m_dt,acc,m_boundary);
+    }
+
+    void World::setBoundary(Boundary *boundary)
+    {
+        m_boundary = boundary;
     }
 }

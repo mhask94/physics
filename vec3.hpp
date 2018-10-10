@@ -20,6 +20,10 @@ namespace phys
         Vec3 operator -(float value);
         Vec3 operator *(float value);
         Vec3 operator /(float value);
+        void operator +=(float value);
+        void operator -=(float value);
+        void operator *=(float value);
+        void operator /=(float value);
         bool operator ==(const Vec3 rhs) const;
 
         float getX() const;

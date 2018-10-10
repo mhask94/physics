@@ -46,8 +46,8 @@ namespace phys
     {
         Vec3 new_vector{0,0,0};
         new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
-        new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
-        new_vector.m_x = vector.m_x < 0 ? vector.m_x*=-1 : vector.m_x*=1;
+        new_vector.m_y = vector.m_y < 0 ? vector.m_y*=-1 : vector.m_y*=1;
+        new_vector.m_z = vector.m_z < 0 ? vector.m_z*=-1 : vector.m_z*=1;
 
         return new_vector;
     }
@@ -94,7 +94,7 @@ namespace phys
 
     Vec3 Vec3::operator -(float value)
     {
-        return Vec3{this->m_x+value,this->m_y+value,this->m_z+value};
+        return Vec3{this->m_x-value,this->m_y-value,this->m_z-value};
     }
 
     Vec3 Vec3::operator *(float value)
@@ -105,6 +105,26 @@ namespace phys
     Vec3 Vec3::operator /(float value)
     {
         return Vec3{this->m_x/value,this->m_y/value,this->m_z/value};
+    }
+
+    void Vec3::operator +=(float value)
+    {
+        *this = (*this) + value;
+    }
+
+    void Vec3::operator -=(float value)
+    {
+        *this = (*this) - value;
+    }
+
+    void Vec3::operator *=(float value)
+    {
+        *this = (*this) * value;
+    }
+
+    void Vec3::operator /=(float value)
+    {
+        *this = (*this) / value;
     }
 
     bool Vec3::operator ==(const Vec3 rhs) const

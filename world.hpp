@@ -39,12 +39,13 @@ namespace phys
         float getDt();
         void setDt(float dt);
         void updateDynamics(Sphere* sphere);
+        void setBoundary(Boundary *boundary);
 
     protected:
         Vec3 m_gravity{0,0,0};
         float m_density{0};
         float m_dt{0.1};
-        Boundary *m_boundary{new Boundary{5.f}};
+        Boundary *m_boundary{nullptr};
 
     private:
         unsigned int m_num_spheres{0};
