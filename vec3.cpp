@@ -42,6 +42,14 @@ namespace phys
         return z = (this->getZ() < 0) ? z=-1 : z=1;
     }
 
+    Vec3 Vec3::sign(Vec3 vector)
+    {
+        vector.m_x = vector.signX();
+        vector.m_y = vector.signY();
+        vector.m_z = vector.signZ();
+        return vector;
+    }
+
     Vec3 Vec3::abs(Vec3 vector)
     {
         Vec3 new_vector{0,0,0};

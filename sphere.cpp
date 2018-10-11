@@ -6,7 +6,7 @@ namespace phys
         m_radius{radius},
         m_mass{mass},
         m_position{position},
-        m_drag_coef{0.8f*3.14159f*radius*radius}
+        m_drag_coef{0.15f*3.14159f*radius*radius}
     {
     }
 
@@ -15,7 +15,7 @@ namespace phys
         m_mass{mass},
         m_position{position},
         m_velocity{velocity},
-        m_drag_coef{0.8f*3.14159f*radius*radius}
+        m_drag_coef{0.15f*3.14159f*radius*radius}
     {
     }
 
@@ -50,6 +50,7 @@ namespace phys
 
     void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
     {
+//        Vec3 drag = 0.5f;
         m_acceleration = acceleration;
         m_velocity = m_velocity + m_acceleration*dt;
         m_position = m_position + m_velocity*dt;

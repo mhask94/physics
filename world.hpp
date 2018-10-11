@@ -15,10 +15,10 @@ namespace phys
         Boundary(float x,float y,float z) :
             max_x{x}, max_y{y}, max_z{z}, min_x{-x}, min_y{-y}, min_z{-z} {}
         float max_x{0};
-        float min_x{0};
         float max_y{0};
-        float min_y{0};
         float max_z{0};
+        float min_x{0};
+        float min_y{0};
         float min_z{0};
     };
 
@@ -47,7 +47,7 @@ namespace phys
     protected:
         Vec3 m_gravity{0,0,0};
         float m_density{0};
-        float m_dt{0.1};
+        float m_dt{0.1f};
         Boundary *m_boundary{nullptr};
 
     private:

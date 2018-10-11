@@ -19,12 +19,12 @@ namespace phys
         float getDragCoef() const;
 
     private:
-        float m_radius{0};
-        float m_mass{1};
+        float m_radius{0.f};
+        float m_mass{1.f};
         Vec3 m_position{0,0,0};
         Vec3 m_velocity{0,0,0};
         Vec3 m_acceleration{0,0,0};
-        float m_coef_restitution{0.8};
+        float m_coef_restitution{0.8f};
         float m_drag_coef{0};
         void handleBoundaryCollision(Boundary* box);
     };

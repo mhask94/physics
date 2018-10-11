@@ -32,6 +32,7 @@ namespace phys
         int signX();
         int signY();
         int signZ();
+        static Vec3 sign(Vec3 vector);
         static Vec3 abs(Vec3 vector);
 
     private:

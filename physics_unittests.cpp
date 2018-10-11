@@ -79,6 +79,16 @@ TEST(Vec3,AskedToTimesFloat_MultipliesProperly)
     EXPECT_EQ(expected_vec3,a);
 }
 
+TEST(Vec3,AskedForSign_ReturnsSignVector)
+{
+    phys::Vec3 a{-4,0,4};
+    a = phys::Vec3::sign(a);
+
+    phys::Vec3 expected_vec3{-1,1,1};
+
+    EXPECT_EQ(expected_vec3,a);
+}
+
 TEST(Vec3,AskedForAbsoluteValue_ReturnsAbsoluteValue)
 {
     phys::Vec3 a{-9.1,0,0.78};
@@ -248,17 +258,17 @@ TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
     phys::Vec3 init_pos2{-4,0,0};
     phys::Vec3 init_vel2{-2,0,0};
     phys::Sphere *sphere2{nullptr};
-    sphere1 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
+    sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
     phys::Vec3 init_pos3{0,-4,0};
     phys::Vec3 init_vel3{0,-1,0};
     phys::Sphere *sphere3{nullptr};
-    sphere1 = new phys::Sphere{radius,mass,init_pos3,init_vel3};
+    sphere3 = new phys::Sphere{radius,mass,init_pos3,init_vel3};
 
     phys::Vec3 init_pos4{0,0,-4};
     phys::Vec3 init_vel4{0,0,-1};
     phys::Sphere *sphere4{nullptr};
-    sphere1 = new phys::Sphere{radius,mass,init_pos4,init_vel4};
+    sphere4 = new phys::Sphere{radius,mass,init_pos4,init_vel4};
 
     phys::World world;
     world.addSphere(sphere1);
@@ -272,7 +282,7 @@ TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
     phys::Vec3 expected_pos1{4,0,0};
     phys::Vec3 expected_pos2{-4,0,0};
     phys::Vec3 expected_pos3{0,-4,0};
-    phys::Vec3 expected_pos4{0,-4,0};
+    phys::Vec3 expected_pos4{0,0,-4};
 
     EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
     EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
