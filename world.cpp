@@ -109,10 +109,11 @@ namespace phys
 
     void World::clearWorld()
     {
-        for (unsigned int i{0}; i < m_num_spheres; i++)
+        for (int i{m_num_spheres-1}; i >= 0; i--)
         {
             delete m_spheres[i];
             m_spheres[i] = nullptr;
+            m_spheres.pop_back();
         }
         m_num_spheres = 0;
     }

@@ -52,7 +52,7 @@ namespace phys
         Boundary *m_boundary{nullptr};
 
     private:
-        unsigned int m_num_spheres{0};
+        int m_num_spheres{0};
         std::vector<Sphere*> m_spheres;
     };
 }
