@@ -16,6 +16,13 @@ TEST(Vec3,AskedIfEqualsSelf_ReturnsTrue)
     EXPECT_EQ(true,a==a);
 }
 
+TEST(Vec3,AskedIfDoesntEqualSelf_ReturnsFalse)
+{
+    phys::Vec3 a{-1,0,1};
+
+    EXPECT_EQ(false,a!=a);
+}
+
 TEST(Vec3,AskedToAddSelf_AddsProperly)
 {
     phys::Vec3 a{-1,0,1};
@@ -190,7 +197,7 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     float radius{1};
     float mass{1};
     phys::Vec3 init_pos1{0,0,0};
-    phys::Vec3 init_vel1{1,-1,0};
+    phys::Vec3 init_vel1{0,0,0};
     phys::Sphere *sphere1{nullptr};
     sphere1 = new phys::Sphere{radius,mass,init_pos1,init_vel1};
 
@@ -200,11 +207,12 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
     phys::World world;
+    world.setDt(0.1f);
     world.addSphere(sphere1);
     world.addSphere(sphere2);
     world.update();
 
-    phys::Vec3 expected_pos1{0.1,-0.1,0};
+    phys::Vec3 expected_pos1{0,0,0};
     phys::Vec3 expected_pos2{5,6,4};
 
     EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
@@ -228,7 +236,7 @@ TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     phys::Sphere *sphere2{nullptr};
     sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
-    phys::Vec3 gravity{0,0,-9.81};
+    phys::Vec3 gravity{0,0,-9.81f};
     phys::World world{gravity};
     world.addSphere(sphere1);
     world.addSphere(sphere2);

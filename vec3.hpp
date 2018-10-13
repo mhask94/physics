@@ -35,6 +35,7 @@ namespace phys
         int signZ();
         static Vec3 sign(Vec3 vector);
         static Vec3 abs(Vec3 vector);
+        static bool isNear(Vec3 a,Vec3 b,float delta);
 
     private:
         float m_x{0};

@@ -69,7 +69,8 @@ namespace phys
 
     void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
     {
-        if (acceleration == Vec3{0,0,0})
+        Vec3 zero{0,0,0};
+        if (Vec3::isNear(acceleration,zero,0.001f) && this->isNearWall(box))
             m_velocity = acceleration;
         else
             m_velocity = m_velocity + acceleration*dt;
@@ -89,11 +90,6 @@ namespace phys
         return m_velocity;
     }
 
-    Vec3 Sphere::getAcceleration() const
-    {
-        return m_acceleration;
-    }
-
     float Sphere::getDragCoef() const
     {
         return m_drag_coef;
@@ -106,11 +102,13 @@ namespace phys
 
     bool Sphere::isNearWall(Boundary* box)
     {
-        if (m_position.getX() >= box->max_x-m_radius || m_position.getX() <= box->min_x+m_radius)
+        if (box == nullptr)
+            return false;
+        if (m_position.getX() >= box->max_x-m_radius-0.1f || m_position.getX() <= box->min_x+m_radius+0.1f)
             return true;
-        else if (m_position.getY() >= box->max_y-m_radius || m_position.getY() <= box->min_y+m_radius)
+        else if (m_position.getY() >= box->max_y-m_radius-0.1f || m_position.getY() <= box->min_y+m_radius+0.1f)
             return true;
-        else if (m_position.getZ() >= box->max_z-m_radius || m_position.getZ() <= box->min_z+m_radius)
+        else if (m_position.getZ() >= box->max_z-m_radius-0.1f || m_position.getZ() <= box->min_z+m_radius+0.1f)
             return true;
         else
             return false;

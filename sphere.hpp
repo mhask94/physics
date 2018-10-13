@@ -17,7 +17,6 @@ namespace phys
         void update(float dt,Vec3 acceleration,Boundary* box=nullptr);
         Vec3 getPosition() const;
         Vec3 getVelocity() const;
-        Vec3 getAcceleration() const;
         float getDragCoef() const;
         float getRadius() const;
         bool isNearWall(Boundary* box);
@@ -27,7 +26,6 @@ namespace phys
         float m_mass{1.f};
         Vec3 m_position{0,0,0};
         Vec3 m_velocity{0,0,0};
-        Vec3 m_acceleration{0,0,0};
         float m_coef_restitution{0};
         float m_drag_coef{0};
         void handleBoundaryCollision(Boundary* box);

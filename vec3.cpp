@@ -60,6 +60,12 @@ namespace phys
         return new_vector;
     }
 
+    bool Vec3::isNear(Vec3 a,Vec3 b,float delta)
+    {
+        Vec3 c = Vec3::abs(a - b);
+        return(c.m_x<delta && c.m_y<delta && c.m_z<delta);
+    }
+
     Vec3 Vec3::operator +(Vec3 rhs)
     {
         return Vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};
@@ -142,7 +148,7 @@ namespace phys
 
     bool Vec3::operator !=(const Vec3 rhs) const
     {
-        return (this->m_x!=rhs.m_x && this->m_y!=rhs.m_y && this->m_z!=rhs.m_z);
+        return !(*this==rhs);
     }
 
     Vec3 operator+(float lhs, Vec3 rhs)
