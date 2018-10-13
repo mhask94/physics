@@ -96,7 +96,7 @@ namespace phys
     void World::updateDynamics(Sphere* sphere)
     {
         Vec3 drag_force{0,0,0};
-        drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef();
+        drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef()/sphere->getMass();
         Vec3 acc{0,0,0};
         acc = m_gravity - drag_force*phys::Vec3::sign(sphere->getVelocity());
         sphere->update(m_dt,acc,m_boundary);

@@ -19,6 +19,25 @@ namespace phys
     {
     }
 
+    Sphere::Sphere(float radius,float mass,float c_r,Vec3 position):
+        m_radius{radius},
+        m_mass{mass},
+        m_position{position},
+        m_coef_restitution{c_r},
+        m_drag_coef{0.15f*3.14159f*radius*radius}
+    {
+    }
+
+    Sphere::Sphere(float radius,float mass,float c_r,Vec3 position,Vec3 velocity):
+        m_radius{radius},
+        m_mass{mass},
+        m_position{position},
+        m_velocity{velocity},
+        m_coef_restitution{c_r},
+        m_drag_coef{0.15f*3.14159f*radius*radius}
+    {
+    }
+
     Sphere::~Sphere()
     {
     }
@@ -77,6 +96,11 @@ namespace phys
     float Sphere::getDragCoef() const
     {
         return m_drag_coef;
+    }
+
+    float Sphere::getRadius() const
+    {
+        return m_radius;
     }
 
     float Sphere::getMass() const
