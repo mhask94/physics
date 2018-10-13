@@ -20,6 +20,7 @@ namespace phys
         Vec3 getAcceleration() const;
         float getDragCoef() const;
         float getRadius() const;
+        bool isNearWall(Boundary* box);
 
     private:
         float m_radius{0.f};

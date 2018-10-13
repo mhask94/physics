@@ -96,14 +96,25 @@ namespace phys
     void World::updateDynamics(Sphere* sphere)
     {
         Vec3 drag_force{0,0,0};
-        drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef()/sphere->getMass();
+        if (m_gravity != Vec3{0,0,0} && !sphere->isNearWall(m_boundary))
+            drag_force = 0.5f*m_density*sphere->getVelocity()*sphere->getVelocity()*sphere->getDragCoef();
         Vec3 acc{0,0,0};
-        acc = m_gravity - drag_force*phys::Vec3::sign(sphere->getVelocity());
+        acc = m_gravity - drag_force*phys::Vec3::sign(sphere->getVelocity())/sphere->getMass();
         sphere->update(m_dt,acc,m_boundary);
     }
 
     void World::setBoundary(Boundary *boundary)
     {
         m_boundary = boundary;
+    }
+
+    void World::clearWorld()
+    {
+        for (unsigned int i{0}; i < m_num_spheres; i++)
+        {
+            delete m_spheres[i];
+            m_spheres[i] = nullptr;
+        }
+        m_num_spheres = 0;
     }
 }

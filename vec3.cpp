@@ -140,6 +140,11 @@ namespace phys
         return (this->m_x==rhs.m_x && this->m_y==rhs.m_y && this->m_z==rhs.m_z);
     }
 
+    bool Vec3::operator !=(const Vec3 rhs) const
+    {
+        return (this->m_x!=rhs.m_x && this->m_y!=rhs.m_y && this->m_z!=rhs.m_z);
+    }
+
     Vec3 operator+(float lhs, Vec3 rhs)
     {
         return rhs + lhs;

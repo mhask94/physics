@@ -43,6 +43,7 @@ namespace phys
         void setDt(float dt);
         void updateDynamics(Sphere* sphere);
         void setBoundary(Boundary *boundary);
+        void resetWorld();
 
     protected:
         Vec3 m_gravity{0,0,0};

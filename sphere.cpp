@@ -69,9 +69,10 @@ namespace phys
 
     void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
     {
-//        Vec3 drag = 0.5f;
-        m_acceleration = acceleration;
-        m_velocity = m_velocity + m_acceleration*dt;
+        if (acceleration == Vec3{0,0,0})
+            m_velocity = acceleration;
+        else
+            m_velocity = m_velocity + acceleration*dt;
         m_position = m_position + m_velocity*dt;
 
         if (box != nullptr)
@@ -101,6 +102,18 @@ namespace phys
     float Sphere::getRadius() const
     {
         return m_radius;
+    }
+
+    bool Sphere::isNearWall(Boundary* box)
+    {
+        if (m_position.getX() >= box->max_x-m_radius || m_position.getX() <= box->min_x+m_radius)
+            return true;
+        else if (m_position.getY() >= box->max_y-m_radius || m_position.getY() <= box->min_y+m_radius)
+            return true;
+        else if (m_position.getZ() >= box->max_z-m_radius || m_position.getZ() <= box->min_z+m_radius)
+            return true;
+        else
+            return false;
     }
 
     float Sphere::getMass() const
