@@ -29,6 +29,7 @@ namespace phys
         float m_coef_restitution{0};
         float m_drag_coef{0};
         void handleBoundaryCollision(Boundary* box);
+        void fixTinyBouncesAtWall();
     };
 }
 

@@ -66,6 +66,12 @@ namespace phys
         return(c.m_x<delta && c.m_y<delta && c.m_z<delta);
     }
 
+    bool Vec3::anyElementIsNear(Vec3 a,Vec3 b,float delta)
+    {
+        Vec3 c = Vec3::abs(a - b);
+        return(c.m_x<delta || c.m_y<delta || c.m_z<delta);
+    }
+
     Vec3 Vec3::operator +(Vec3 rhs)
     {
         return Vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};
