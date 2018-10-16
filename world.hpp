@@ -48,7 +48,7 @@ namespace phys
     protected:
         Vec3 m_gravity{0,0,0};
         double m_density{0};
-        double m_dt{1/30};
+        double m_dt{1/30.0};
         Boundary *m_boundary{nullptr};
 
     private:
