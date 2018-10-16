@@ -10,16 +10,16 @@ namespace phys
     struct Boundary
     {
     public:
-        Boundary(float dim) :
+        Boundary(double dim) :
             max_x{dim}, max_y{dim}, max_z{dim}, min_x{-dim}, min_y{-dim}, min_z{-dim} {}
-        Boundary(float x,float y,float z) :
+        Boundary(double x,double y,double z) :
             max_x{x}, max_y{y}, max_z{z}, min_x{-x}, min_y{-y}, min_z{-z} {}
-        float max_x{0};
-        float max_y{0};
-        float max_z{0};
-        float min_x{0};
-        float min_y{0};
-        float min_z{0};
+        double max_x{0};
+        double max_y{0};
+        double max_z{0};
+        double min_x{0};
+        double min_y{0};
+        double min_z{0};
     };
 
     class World
@@ -29,26 +29,26 @@ namespace phys
         World(Boundary* box);
         World(Vec3 gravity);
         World(Vec3 gravity,Boundary* box);
-        World(Vec3 gravity,float density);
-        World(Vec3 gravity,float density,Boundary* box);
+        World(Vec3 gravity,double density);
+        World(Vec3 gravity,double density,Boundary* box);
         ~World();
         Vec3 getGravity() const;
         void setGravity(const Vec3 &gravity);
-        float getDensity() const;
-        void setDensity(float density);
+        double getDensity() const;
+        void setDensity(double density);
         void addSphere(Sphere* sphere);
         unsigned int getNumSpheres() const;
         void update();
-        float getDt();
-        void setDt(float dt);
+        double getDt();
+        void setDt(double dt);
         void updateDynamics(Sphere* sphere);
         void setBoundary(Boundary *boundary);
         void clearWorld();
 
     protected:
         Vec3 m_gravity{0,0,0};
-        float m_density{0};
-        float m_dt{1/30.f};
+        double m_density{0};
+        double m_dt{1/30};
         Boundary *m_boundary{nullptr};
 
     private:

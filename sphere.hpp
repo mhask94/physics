@@ -8,26 +8,26 @@ namespace phys
     class Sphere
     {
     public:
-        Sphere(float radius,float mass,Vec3 position);
-        Sphere(float radius,float mass,Vec3 position,Vec3 velocity);
-        Sphere(float radius,float mass,float c_r,Vec3 position);
-        Sphere(float radius,float mass,float c_r,Vec3 position,Vec3 velocity);
+        Sphere(double radius,double mass,Vec3 position);
+        Sphere(double radius,double mass,Vec3 position,Vec3 velocity);
+        Sphere(double radius,double mass,double c_r,Vec3 position);
+        Sphere(double radius,double mass,double c_r,Vec3 position,Vec3 velocity);
         ~Sphere();
-        float getMass() const;
-        void update(float dt,Vec3 acceleration,Boundary* box=nullptr);
+        double getMass() const;
+        void update(double dt,Vec3 acceleration,Boundary* box=nullptr);
         Vec3 getPosition() const;
         Vec3 getVelocity() const;
-        float getDragCoef() const;
-        float getRadius() const;
+        double getDragCoef() const;
+        double getRadius() const;
         bool isNearWall(Boundary* box);
 
     private:
-        float m_radius{0.f};
-        float m_mass{1.f};
+        double m_radius{0};
+        double m_mass{1};
         Vec3 m_position{0,0,0};
         Vec3 m_velocity{0,0,0};
-        float m_coef_restitution{0};
-        float m_drag_coef{0};
+        double m_coef_restitution{0};
+        double m_drag_coef{0};
         void handleBoundaryCollision(Boundary* box);
     };
 }

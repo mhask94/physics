@@ -7,7 +7,7 @@ namespace phys
     {
     public:
         Vec3();
-        Vec3(float x,float y,float z);
+        Vec3(double x,double y,double z);
 
         Vec3 operator +(Vec3 rhs);
         Vec3 operator -(Vec3 rhs);
@@ -16,37 +16,37 @@ namespace phys
         void operator -=(Vec3 rhs);
         void operator *=(Vec3 rhs);
         Vec3 operator -();
-        Vec3 operator +(float value);
-        Vec3 operator -(float value);
-        Vec3 operator *(float value);
-        Vec3 operator /(float value);
-        void operator +=(float value);
-        void operator -=(float value);
-        void operator *=(float value);
-        void operator /=(float value);
+        Vec3 operator +(double value);
+        Vec3 operator -(double value);
+        Vec3 operator *(double value);
+        Vec3 operator /(double value);
+        void operator +=(double value);
+        void operator -=(double value);
+        void operator *=(double value);
+        void operator /=(double value);
         bool operator ==(const Vec3 rhs) const;
         bool operator !=(const Vec3 rhs) const;
 
-        float getX() const;
-        float getY() const;
-        float getZ() const;
+        double getX() const;
+        double getY() const;
+        double getZ() const;
         int signX();
         int signY();
         int signZ();
         static Vec3 sign(Vec3 vector);
         static Vec3 abs(Vec3 vector);
-        static bool isNear(Vec3 a,Vec3 b,float delta);
-        static bool anyElementIsNear(Vec3 a,Vec3 b,float delta);
+        static bool isNear(Vec3 a,Vec3 b,double delta);
+        static bool anyElementIsNear(Vec3 a,Vec3 b,double delta);
 
 
     private:
-        float m_x{0};
-        float m_y{0};
-        float m_z{0};
+        double m_x{0};
+        double m_y{0};
+        double m_z{0};
     };
 
-    Vec3 operator +(float lhs, Vec3 rhs);
-    Vec3 operator -(float lhs, Vec3 rhs);
-    Vec3 operator *(float lhs, Vec3 rhs);
+    Vec3 operator +(double lhs, Vec3 rhs);
+    Vec3 operator -(double lhs, Vec3 rhs);
+    Vec3 operator *(double lhs, Vec3 rhs);
 }
 #endif // VEC3_H

@@ -4,22 +4,22 @@ namespace phys
 {
     Vec3::Vec3(){}
 
-    Vec3::Vec3(float x,float y,float z):
+    Vec3::Vec3(double x,double y,double z):
         m_x{x}, m_y{y}, m_z{z}
     {
     }
 
-    float Vec3::getX() const
+    double Vec3::getX() const
     {
         return m_x;
     }
 
-    float Vec3::getY() const
+    double Vec3::getY() const
     {
         return m_y;
     }
 
-    float Vec3::getZ() const
+    double Vec3::getZ() const
     {
         return m_z;
     }
@@ -60,13 +60,13 @@ namespace phys
         return new_vector;
     }
 
-    bool Vec3::isNear(Vec3 a,Vec3 b,float delta)
+    bool Vec3::isNear(Vec3 a,Vec3 b,double delta)
     {
         Vec3 c = Vec3::abs(a - b);
         return(c.m_x<delta && c.m_y<delta && c.m_z<delta);
     }
 
-    bool Vec3::anyElementIsNear(Vec3 a,Vec3 b,float delta)
+    bool Vec3::anyElementIsNear(Vec3 a,Vec3 b,double delta)
     {
         Vec3 c = Vec3::abs(a - b);
         return(c.m_x<delta || c.m_y<delta || c.m_z<delta);
@@ -77,7 +77,7 @@ namespace phys
         return Vec3{this->m_x+rhs.m_x,this->m_y+rhs.m_y,this->m_z+rhs.m_z};
     }
 
-    Vec3 Vec3::operator +(float value)
+    Vec3 Vec3::operator +(double value)
     {
         return Vec3{this->m_x+value,this->m_y+value,this->m_z+value};
     }
@@ -112,37 +112,37 @@ namespace phys
         return Vec3{-this->m_x,-this->m_y,-this->m_z};
     }
 
-    Vec3 Vec3::operator -(float value)
+    Vec3 Vec3::operator -(double value)
     {
         return Vec3{this->m_x-value,this->m_y-value,this->m_z-value};
     }
 
-    Vec3 Vec3::operator *(float value)
+    Vec3 Vec3::operator *(double value)
     {
         return Vec3{this->m_x*value,this->m_y*value,this->m_z*value};
     }
 
-    Vec3 Vec3::operator /(float value)
+    Vec3 Vec3::operator /(double value)
     {
         return Vec3{this->m_x/value,this->m_y/value,this->m_z/value};
     }
 
-    void Vec3::operator +=(float value)
+    void Vec3::operator +=(double value)
     {
         *this = (*this) + value;
     }
 
-    void Vec3::operator -=(float value)
+    void Vec3::operator -=(double value)
     {
         *this = (*this) - value;
     }
 
-    void Vec3::operator *=(float value)
+    void Vec3::operator *=(double value)
     {
         *this = (*this) * value;
     }
 
-    void Vec3::operator /=(float value)
+    void Vec3::operator /=(double value)
     {
         *this = (*this) / value;
     }
@@ -157,17 +157,17 @@ namespace phys
         return !(*this==rhs);
     }
 
-    Vec3 operator+(float lhs, Vec3 rhs)
+    Vec3 operator+(double lhs, Vec3 rhs)
     {
         return rhs + lhs;
     }
 
-    Vec3 operator-(float lhs, Vec3 rhs)
+    Vec3 operator-(double lhs, Vec3 rhs)
     {
         return -rhs + lhs;
     }
 
-    Vec3 operator *(float lhs, Vec3 rhs)
+    Vec3 operator *(double lhs, Vec3 rhs)
     {
         return rhs * lhs;
     }

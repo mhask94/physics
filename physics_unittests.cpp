@@ -3,7 +3,7 @@
 #include "sphere.hpp"
 #include "vec3.hpp"
 
-bool vec3ExpectNear(phys::Vec3 a,phys::Vec3 b,float delta)
+bool vec3ExpectNear(phys::Vec3 a,phys::Vec3 b,double delta)
 {
     phys::Vec3 c = phys::Vec3::abs(a - b);
     return(c.getX()<delta && c.getY()<delta && c.getZ()<delta);
@@ -53,10 +53,10 @@ TEST(Vec3,AskedToTimesSelf_MultipliesProperly)
     EXPECT_EQ(expected_vec3,a);
 }
 
-TEST(Vec3,AskedToAddFloat_AddsProperly)
+TEST(Vec3,AskedToAddDouble_AddsProperly)
 {
     phys::Vec3 a{-1,0,1};
-    float b{0.5};
+    double b{0.5};
     a += b;
 
     phys::Vec3 expected_vec3{-0.5,0.5,1.5};
@@ -64,10 +64,10 @@ TEST(Vec3,AskedToAddFloat_AddsProperly)
     EXPECT_EQ(expected_vec3,a);
 }
 
-TEST(Vec3,AskedToMinusFloat_SubtractsProperly)
+TEST(Vec3,AskedToMinusDouble_SubtractsProperly)
 {
     phys::Vec3 a{-1,0,1};
-    float b{0.5};
+    double b{0.5};
     a -= b;
 
     phys::Vec3 expected_vec3{-1.5,-0.5,0.5};
@@ -75,10 +75,10 @@ TEST(Vec3,AskedToMinusFloat_SubtractsProperly)
     EXPECT_EQ(expected_vec3,a);
 }
 
-TEST(Vec3,AskedToTimesFloat_MultipliesProperly)
+TEST(Vec3,AskedToTimesDouble_MultipliesProperly)
 {
     phys::Vec3 a{-1,0,1};
-    float b{0.5};
+    double b{0.5};
     a *= b;
 
     phys::Vec3 expected_vec3{-0.5,0,0.5};
@@ -108,13 +108,13 @@ TEST(Vec3,AskedForAbsoluteValue_ReturnsAbsoluteValue)
 
 TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos{0,0,0};
     phys::Vec3 init_vel{0,0,0};
     phys::Sphere sphere{radius,mass,init_pos,init_vel};
 
-    float dt{0.1};
+    double dt{0.1};
     phys::Vec3 gravity{0,0,0};
     sphere.update(dt,gravity);
 
@@ -125,13 +125,13 @@ TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 
 TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos{0,0,0};
     phys::Vec3 init_vel{1,0,0};
     phys::Sphere sphere{radius,mass,init_pos,init_vel};
 
-    float dt{0.1};
+    double dt{0.1};
     phys::Vec3 gravity{0,0,0};
     sphere.update(dt,gravity);
 
@@ -153,13 +153,13 @@ TEST(SphereWithVelocityAnd0Acceleration,AskedToUpdate_CorrectPosition)
 
 TEST(SphereWithGravityAndNoVelocity,AskedToUpdate_UpdatesCorrectly)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos{0,10,0};
     phys::Vec3 gravity{0,-9.81,0};
     phys::Sphere sphere{radius,mass,init_pos};
 
-    float dt{0.1};
+    double dt{0.1};
     sphere.update(dt,gravity);
 
     phys::Vec3 expected_pos{0,0,0};
@@ -167,7 +167,7 @@ TEST(SphereWithGravityAndNoVelocity,AskedToUpdate_UpdatesCorrectly)
     expected_vel = gravity*dt;
     expected_pos = init_pos + expected_vel*dt;
 
-    EXPECT_TRUE(vec3ExpectNear(expected_pos,sphere.getPosition(),.001f));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos,sphere.getPosition(),.001));
 }
 
 TEST(EmptyWorld,AskedForNumberOfSpheres_ReturnsZero)
@@ -178,8 +178,8 @@ TEST(EmptyWorld,AskedForNumberOfSpheres_ReturnsZero)
 
 TEST(WorldWithSphere,AskedForNumberOfSpheres_ReturnsOne)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos{0,0,0};
     phys::Sphere *sphere{nullptr};
     sphere = new phys::Sphere{radius,mass,init_pos};
@@ -194,8 +194,8 @@ TEST(WorldWithSphere,AskedForNumberOfSpheres_ReturnsOne)
 
 TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos1{0,0,0};
     phys::Vec3 init_vel1{0,0,0};
     phys::Sphere *sphere1{nullptr};
@@ -207,7 +207,7 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
     phys::World world;
-    world.setDt(0.1f);
+    world.setDt(0.1);
     world.addSphere(sphere1);
     world.addSphere(sphere2);
     world.update();
@@ -215,8 +215,8 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     phys::Vec3 expected_pos1{0,0,0};
     phys::Vec3 expected_pos2{5,6,4};
 
-    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
-    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001));
 
     delete sphere1;
     delete sphere2;
@@ -224,8 +224,8 @@ TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 
 TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos1{0,0,0};
     phys::Vec3 init_vel1{0,0,0};
     phys::Sphere *sphere1{nullptr};
@@ -236,7 +236,7 @@ TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     phys::Sphere *sphere2{nullptr};
     sphere2 = new phys::Sphere{radius,mass,init_pos2,init_vel2};
 
-    phys::Vec3 gravity{0,0,-9.81f};
+    phys::Vec3 gravity{0,0,-9.81};
     phys::World world{gravity};
     world.addSphere(sphere1);
     world.addSphere(sphere2);
@@ -247,8 +247,8 @@ TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
     expected_pos1 = init_pos1 + (init_vel1+gravity*world.getDt())*world.getDt();
     expected_pos2 = init_pos2 + (init_vel2+gravity*world.getDt())*world.getDt();
 
-    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
-    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001));
 
     delete sphere1;
     delete sphere2;
@@ -256,8 +256,8 @@ TEST(WorldWithNoDensity,AskedToUpdate_UpdatesAllShperesCorrectly)
 
 TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
 {
-    float radius{1};
-    float mass{1};
+    double radius{1};
+    double mass{1};
     phys::Vec3 init_pos1{4,0,0};
     phys::Vec3 init_vel1{2,0,0};
     phys::Sphere *sphere1{nullptr};
@@ -292,10 +292,10 @@ TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
     phys::Vec3 expected_pos3{0,-4,0};
     phys::Vec3 expected_pos4{0,0,-4};
 
-    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001f));
-    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001f));
-    EXPECT_TRUE(vec3ExpectNear(expected_pos3,sphere3->getPosition(),.001f));
-    EXPECT_TRUE(vec3ExpectNear(expected_pos4,sphere4->getPosition(),.001f));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos1,sphere1->getPosition(),.001));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos2,sphere2->getPosition(),.001));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos3,sphere3->getPosition(),.001));
+    EXPECT_TRUE(vec3ExpectNear(expected_pos4,sphere4->getPosition(),.001));
 
     delete sphere1;
     delete sphere2;
