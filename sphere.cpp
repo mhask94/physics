@@ -67,22 +67,9 @@ namespace phys
         }
     }
 
-    void Sphere::fixTinyBouncesAtWall()
-    {
-        m_velocity = (Vec3::abs(m_velocity).getY() < .00000000001f) ? m_velocity * Vec3{1,0,1} : m_velocity;
-        m_velocity = (Vec3::abs(m_velocity).getZ() < .00000000001f) ? m_velocity * Vec3{1,1,0} : m_velocity;
-        m_velocity = (Vec3::abs(m_velocity).getX() < .00000000001f) ? m_velocity * Vec3{0,1,1} : m_velocity;
-
-        if (m_velocity.getX()==m_velocity.getY()==0 || m_velocity.getX()==m_velocity.getZ()==0 || m_velocity.getY()==m_velocity.getZ()==0)
-            m_velocity *= Vec3{0,0,0};
-    }
-
     void Sphere::update(float dt,Vec3 acceleration,Boundary* box)
     {
-        Vec3 zero{0,0,0};
         m_velocity = m_velocity + acceleration*dt;
-        if (Vec3::anyElementIsNear(m_velocity,zero,.00000000001f) && this->isNearWall(box) && m_velocity!=zero)
-            fixTinyBouncesAtWall();
         m_position = m_position + m_velocity*dt;
 
         if (box != nullptr)
