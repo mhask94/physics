@@ -43,6 +43,7 @@ namespace phys
         void setDt(double dt);
         void updateDynamics(Sphere* sphere);
         void setBoundary(Boundary *boundary);
+        Boundary *getBoundary() const;
         void clearWorld();
 
     protected:

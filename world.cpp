@@ -107,6 +107,11 @@ namespace phys
         m_boundary = boundary;
     }
 
+    Boundary* World::getBoundary() const
+    {
+        return m_boundary;
+    }
+
     void World::clearWorld()
     {
         for (int i{m_num_spheres-1}; i >= 0; i--)
