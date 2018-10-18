@@ -23,11 +23,12 @@ namespace phys
 
     private:
         double m_radius{0};
-        double m_mass{1};
+        double m_mass{0};
         Vec3 m_position{0,0,0};
         Vec3 m_velocity{0,0,0};
         double m_coef_restitution{0};
-        double m_drag_coef{0};
+        double m_frontal_area{0};
+        double m_drag_coef{0.15};
         void handleBoundaryCollision(Boundary* box);
     };
 }

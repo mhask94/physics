@@ -38,7 +38,6 @@ namespace phys
         static bool isNear(Vec3 a,Vec3 b,double delta);
         static bool anyElementIsNear(Vec3 a,Vec3 b,double delta);
 
-
     private:
         double m_x{0};
         double m_y{0};
