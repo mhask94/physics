@@ -100,6 +100,28 @@ TEST(Vec3,AskedForAbsoluteValue_ReturnsAbsoluteValue)
     EXPECT_EQ(expected_vec3,a);
 }
 
+TEST(TwoVec3s,AskedToTakeDotProduct_ReturnsCorrectValue)
+{
+    phys::Vec3 a{-2,2,1};
+    phys::Vec3 b{1,3,0};
+    phys::Vec3 c{0,0,0};
+    c = phys::Vec3::dot(a,b);
+
+    double expected_value{4};
+
+    EXPECT_EQ(expected_value,c);
+}
+
+TEST(Vec3,AskedForNorm_ReturnsNorm)
+{
+    phys::Vec3 a{-1,0,3};
+    a = phys::Vec3::norm(a);
+
+    double expected_value{10};
+
+    EXPECT_EQ(expected_vec3,a);
+}
+
 TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 {
     double radius{1};
@@ -335,4 +357,47 @@ TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
     delete sphere2;
     delete sphere3;
     delete sphere4;
+}
+
+TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursProperly)
+{
+    double radius1{1};
+    double mass1{10};
+    double cr1{0.6};
+    phys::Vec3 init_pos1{-0.5,0,0};
+    phys::Vec3 init_vel1{2,0,0};
+    phys::Sphere *sphere1{nullptr};
+    sphere1 = new phys::Sphere{radius1,mass1,cr1,init_pos1,init_vel1};
+
+    double radius2{0.5};
+    double mass2{5};
+    double cr2{0.8};
+    phys::Vec3 init_pos2{0.25,0,0};
+    phys::Vec3 init_vel2{-2,0,0};
+    phys::Sphere *sphere2{nullptr};
+    sphere2 = new phys::Sphere{radius2,mass2,cr2,init_pos2,init_vel2};
+
+    phys::World world;
+    world.setDt(0.1);
+    world.addSphere(sphere1);
+    world.addSphere(sphere2);
+    world.update();
+
+    phys::Vec3 expected_vel1{0,0,0};
+    phys::Vec3 expected_vel2{0,0,0};
+    expected_vel1 = cr1*(init_vel1-(2*mass2*phys::Vec3::dot(init_vel1-init_vel2,init_pos1-init_pos2)/((mass1+mass2)*phys::Vec3::norm(init_pos1-init_pos2)))*(init_pos1-init_pos2));
+    expected_vel2 = cr2*(init_vel2-(2*mass1*phys::Vec3::dot(init_vel2-init_vel1,init_pos2-init_pos1)/((mass1+mass2)*phys::Vec3::norm(init_pos2-init_pos1)))*(init_pos2-init_pos1));
+
+    phys::Vec3 expected_pos1{0,0,0};
+    phys::Vec3 expected_pos2{0,0,0};
+    expected_pos1 = init_pos1 + expected_vel1*world.getDt();
+    expected_pos2 = init_pos2 + expected_vel2*world.getDt();
+
+    double buffer{0.00001};
+
+    EXPECT_TRUE(phys::Vec3::isNear(expected_pos1,sphere1->getPosition(),buffer));
+    EXPECT_TRUE(phys::Vec3::isNear(expected_pos2,sphere2->getPosition(),buffer));
+
+    delete sphere1;
+    delete sphere2;
 }
