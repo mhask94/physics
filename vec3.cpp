@@ -60,17 +60,27 @@ namespace phys
         return new_vector;
     }
 
-    bool Vec3::isNear(Vec3 a,Vec3 b,double delta)
+    bool Vec3::isNear(Vec3 vec1,Vec3 vec2,double delta)
     {
-        Vec3 c = Vec3::abs(a - b);
-        return(c.m_x<delta && c.m_y<delta && c.m_z<delta);
+        Vec3 diff = Vec3::abs(vec1 - vec2);
+        return(diff.m_x<delta && diff.m_y<delta && diff.m_z<delta);
     }
 
-    bool Vec3::anyElementIsNear(Vec3 a,Vec3 b,double delta)
+    bool Vec3::anyElementIsNear(Vec3 vec1,Vec3 vec2,double delta)
     {
-        Vec3 c = Vec3::abs(a - b);
-        return(c.m_x<delta || c.m_y<delta || c.m_z<delta);
+        Vec3 diff = Vec3::abs(vec1 - vec2);
+        return(diff.m_x<delta || diff.m_y<delta || diff.m_z<delta);
     }
+
+    double Vec3::dot(Vec3 vec1, Vec3 vec2)
+    {
+        return vec1.m_x*vec2.m_x+vec1.m_y*vec2.m_y+vec1.m_z*vec2.m_z;
+    }
+
+//    double Vec3::norm(Vec3 vector)
+//    {
+//        return dot(vector,vector);
+//    }
 
     Vec3 Vec3::operator +(Vec3 rhs)
     {

@@ -35,8 +35,10 @@ namespace phys
         int signZ();
         static Vec3 sign(Vec3 vector);
         static Vec3 abs(Vec3 vector);
-        static bool isNear(Vec3 a,Vec3 b,double delta);
-        static bool anyElementIsNear(Vec3 a,Vec3 b,double delta);
+        static bool isNear(Vec3 vec1,Vec3 vec2,double delta);
+        static bool anyElementIsNear(Vec3 vec1,Vec3 vec2,double delta);
+        static double dot(Vec3 vec1,Vec3 vec2);
+//        static double norm(Vec3 vector);
 
     private:
         double m_x{0};
