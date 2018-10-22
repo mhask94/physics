@@ -113,6 +113,22 @@ namespace phys
             return false;
     }
 
+    void Sphere::handleSphereCollision(Sphere *other_sphere)
+    {
+        Vec3 pos_diff{m_position-other_sphere->m_position};
+        Vec3 vel_diff{m_velocity-other_sphere->m_velocity};
+        double mass_sum{m_mass+other_sphere->m_mass};
+        double m2_frac{2*other_sphere->m_mass/mass_sum};
+        double m1_frac{2*m_mass/mass_sum};
+        Vec3 projection{Vec3::dot(vel_diff,pos_diff)/Vec3::norm2(pos_diff)*pos_diff};
+        m_velocity = m_coef_restitution*(m_velocity-m2_frac*projection);
+        other_sphere->m_velocity = other_sphere->m_coef_restitution*(other_sphere->m_velocity+m1_frac*projection);
+
+        double overlap{m_radius+other_sphere->m_radius-Vec3::norm(pos_diff)};
+//        other_sphere->m_position += other_sphere->m_velocity/Vec3::norm(other_sphere->m_velocity)*overlap;
+        m_position += m_velocity/Vec3::norm(m_velocity)*overlap;
+    }
+
     double Sphere::getMass() const
     {
         return m_mass;

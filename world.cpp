@@ -42,6 +42,7 @@ namespace phys
         if (m_boundary != nullptr)
             delete m_boundary;
         m_boundary = nullptr;
+        this->clearWorld();
     }
 
     Vec3 World::getGravity() const
@@ -80,6 +81,9 @@ namespace phys
         for (unsigned int i{0}; i < m_num_spheres; i++)
         {
             this->updateDynamics(m_spheres[i]);
+            if (i>0)
+                for (int j{i-1}; j >= 0; j--)
+                    this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
         }
     }
 
@@ -100,6 +104,16 @@ namespace phys
         Vec3 acc{0,0,0};
         acc = m_gravity - drag_force*phys::Vec3::sign(sphere->getVelocity())/sphere->getMass();
         sphere->update(m_dt,acc,m_boundary);
+    }
+
+    void World::checkForSphereCollision(Sphere *sphere1, Sphere *sphere2)
+    {
+        double dist_apart{0};
+        dist_apart = Vec3::norm(sphere1->getPosition()-sphere2->getPosition());
+        if (dist_apart < sphere1->getRadius()+sphere2->getRadius())
+        {
+            sphere1->handleSphereCollision(sphere2);
+        }
     }
 
     void World::setBoundary(Boundary *boundary)

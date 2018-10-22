@@ -382,7 +382,7 @@ TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursPro
     world.addSphere(sphere2);
     world.update();
 
-    phys::Vec3 expected_vel1{-.399999,0,0};
+    phys::Vec3 expected_vel1{-.4,0,0};
     phys::Vec3 expected_vel2{2.666666,0,0};
     expected_vel1 = cr1*(init_vel1-(2*mass2*phys::Vec3::dot(init_vel1-init_vel2,init_pos1-init_pos2)/((mass1+mass2)*phys::Vec3::dot(init_pos1-init_pos2,init_pos1-init_pos2)))*(init_pos1-init_pos2));
     expected_vel2 = cr2*(init_vel2-(2*mass1*phys::Vec3::dot(init_vel2-init_vel1,init_pos2-init_pos1)/((mass1+mass2)*phys::Vec3::dot(init_pos2-init_pos1,init_pos2-init_pos1)))*(init_pos2-init_pos1));
@@ -393,6 +393,9 @@ TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursPro
     expected_pos2 = init_pos2 + expected_vel2*world.getDt();
 
     double buffer{0.00001};
+
+    EXPECT_TRUE(phys::Vec3::isNear(expected_vel1,sphere1->getVelocity(),buffer));
+    EXPECT_TRUE(phys::Vec3::isNear(expected_vel2,sphere2->getVelocity(),buffer));
 
     EXPECT_TRUE(phys::Vec3::isNear(expected_pos1,sphere1->getPosition(),buffer));
     EXPECT_TRUE(phys::Vec3::isNear(expected_pos2,sphere2->getPosition(),buffer));

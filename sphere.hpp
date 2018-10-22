@@ -20,6 +20,7 @@ namespace phys
         double getDragCoef() const;
         double getRadius() const;
         bool isNearWall(Boundary* box);
+        void handleSphereCollision(Sphere* other_sphere);
 
     private:
         double m_radius{0};

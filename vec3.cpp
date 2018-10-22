@@ -1,4 +1,5 @@
 #include "vec3.hpp"
+#include <cmath>
 
 namespace phys
 {
@@ -77,10 +78,16 @@ namespace phys
         return vec1.m_x*vec2.m_x+vec1.m_y*vec2.m_y+vec1.m_z*vec2.m_z;
     }
 
-//    double Vec3::norm(Vec3 vector)
-//    {
-//        return dot(vector,vector);
-//    }
+    double Vec3::norm(Vec3 vector)
+    {
+        return sqrt(dot(vector,vector));
+    }
+
+    double Vec3::norm2(Vec3 vector)
+    {
+        double norm_squared{dot(vector,vector)};
+        return norm_squared;
+    }
 
     Vec3 Vec3::operator +(Vec3 rhs)
     {

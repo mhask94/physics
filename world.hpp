@@ -36,14 +36,15 @@ namespace phys
         void setGravity(const Vec3 &gravity);
         double getDensity() const;
         void setDensity(double density);
-        void addSphere(Sphere* sphere);
-        unsigned int getNumSpheres() const;
-        void update();
         double getDt();
         void setDt(double dt);
-        void updateDynamics(Sphere* sphere);
         void setBoundary(Boundary *boundary);
         Boundary *getBoundary() const;
+        unsigned int getNumSpheres() const;
+        void addSphere(Sphere* sphere);
+        void update();
+        void updateDynamics(Sphere* sphere);
+        void checkForSphereCollision(Sphere* sphere1,Sphere* sphere2);
         void clearWorld();
 
     protected:

@@ -38,7 +38,8 @@ namespace phys
         static bool isNear(Vec3 vec1,Vec3 vec2,double delta);
         static bool anyElementIsNear(Vec3 vec1,Vec3 vec2,double delta);
         static double dot(Vec3 vec1,Vec3 vec2);
-//        static double norm(Vec3 vector);
+        static double norm(Vec3 vector);
+        static double norm2(Vec3 vector);
 
     private:
         double m_x{0};
