@@ -82,10 +82,23 @@ namespace phys
             for (int i{0}; i < m_num_spheres; i++)
             {
                 this->updateDynamics(m_spheres[i]);
-                if (i>0)
-                    for (int j{i-1}; j >= 0; j--)
+//                if (i>0)
+//                    for (int j{i-1}; j >= 0; j--)
+//                        this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
+                for (int j{0}; j < m_num_spheres; j++)
+                {
+                    if (i!=j)
                         this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
+                }
             }
+//            for (int i{0}; i < m_num_spheres; i++)
+//            {
+//                for (int j{0}; j < m_num_spheres; j++)
+//                {
+//                    if (i!=j)
+//                        this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
+//                }
+//            }
         }
     }
 
@@ -110,10 +123,9 @@ namespace phys
 
     void World::checkForSphereCollision(Sphere *sphere1, Sphere *sphere2)
     {
-        double buffer{0.001};
         double dist_apart{0};
         dist_apart = Vec3::norm(sphere1->getPosition()-sphere2->getPosition());
-        if (dist_apart < sphere1->getRadius()+sphere2->getRadius()+buffer)
+        if (dist_apart < sphere1->getRadius()+sphere2->getRadius())
         {
             sphere1->handleSphereCollision(sphere2,m_boundary);
         }
