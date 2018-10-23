@@ -390,10 +390,8 @@ TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursPro
     expected_vel1 = cr1*(init_vel1-(2*mass2*phys::Vec3::dot(init_vel1-init_vel2,init_pos1-init_pos2)/((mass1+mass2)*phys::Vec3::dot(init_pos1-init_pos2,init_pos1-init_pos2)))*(init_pos1-init_pos2));
     expected_vel2 = cr2*(init_vel2-(2*mass1*phys::Vec3::dot(init_vel2-init_vel1,init_pos2-init_pos1)/((mass1+mass2)*phys::Vec3::dot(init_pos2-init_pos1,init_pos2-init_pos1)))*(init_pos2-init_pos1));
 
-    phys::Vec3 expected_pos1{0,0,0};
-    phys::Vec3 expected_pos2{0,0,0};
-    expected_pos1 = init_pos1 + expected_vel1*world.getDt();
-    expected_pos2 = init_pos2 + expected_vel2*world.getDt();
+    phys::Vec3 expected_pos1{-0.3,0,0};
+    phys::Vec3 expected_pos2{1.2,0,0};
 
     double buffer{0.00001};
 

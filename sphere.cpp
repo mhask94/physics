@@ -46,8 +46,6 @@ namespace phys
     {
         m_radius = 0;
         m_mass = 0;
-//        m_position{0,0,0};
-//        m_velocity{0,0,0};
         m_coef_restitution = 0;
         m_frontal_area = 0;
         m_drag_coef = 0;
@@ -120,7 +118,7 @@ namespace phys
             return false;
     }
 
-    void Sphere::handleSphereCollision(Sphere *other_sphere)
+    void Sphere::handleSphereCollision(Sphere* other_sphere,Boundary* box)
     {
         // Get rid of overlap first
         Vec3 pos_diff{other_sphere->m_position-m_position};
@@ -130,26 +128,32 @@ namespace phys
         if (Vec3::norm(other_sphere->m_velocity) > Vec3::norm(m_velocity))
         {
             other_sphere->m_position += shift_dir*overlap;
-            Vec3 abs_pos{Vec3::abs(other_sphere->m_position)};
-            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
-            {
-                double x = (abs_pos.getX() > 5) ? 5*other_sphere->m_position.signX() : other_sphere->m_position.getX();
-                double y = (abs_pos.getY() > 5) ? 5*other_sphere->m_position.signY() : other_sphere->m_position.getY();
-                double z = (abs_pos.getZ() > 5) ? 5*other_sphere->m_position.signZ() : other_sphere->m_position.getZ();
-                other_sphere->m_position = Vec3{x,y,z};
-            }
+//            Vec3 abs_pos{Vec3::abs(other_sphere->m_position)};
+//            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
+//            {
+//                double x = (abs_pos.getX() > 5) ? 5*other_sphere->m_position.signX() : other_sphere->m_position.getX();
+//                double y = (abs_pos.getY() > 5) ? 5*other_sphere->m_position.signY() : other_sphere->m_position.getY();
+//                double z = (abs_pos.getZ() > 5) ? 5*other_sphere->m_position.signZ() : other_sphere->m_position.getZ();
+//                other_sphere->m_position = Vec3{x,y,z};
+//            }
         }
         else
         {
             m_position -= shift_dir*overlap;
-            Vec3 abs_pos{Vec3::abs(m_position)};
-            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
-            {
-                double x = (abs_pos.getX() > 5) ? 5*m_position.signX() : m_position.getX();
-                double y = (abs_pos.getY() > 5) ? 5*m_position.signY() : m_position.getY();
-                double z = (abs_pos.getZ() > 5) ? 5*m_position.signZ() : m_position.getZ();
-                m_position = Vec3{x,y,z};
-            }
+//            Vec3 abs_pos{Vec3::abs(m_position)};
+//            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
+//            {
+//                double x = (abs_pos.getX() > 5) ? 5*m_position.signX() : m_position.getX();
+//                double y = (abs_pos.getY() > 5) ? 5*m_position.signY() : m_position.getY();
+//                double z = (abs_pos.getZ() > 5) ? 5*m_position.signZ() : m_position.getZ();
+//                m_position = Vec3{x,y,z};
+//            }
+        }
+
+        if (box!=nullptr)
+        {
+            other_sphere->handleBoundaryCollision(box);
+            this->handleBoundaryCollision(box);
         }
 
         // Update velocities

@@ -42,8 +42,6 @@ namespace phys
         if (m_boundary != nullptr)
             delete m_boundary;
         m_boundary = nullptr;
-//        if (m_num_spheres > 0)
-//            this->clearWorld();
     }
 
     Vec3 World::getGravity() const
@@ -115,9 +113,9 @@ namespace phys
         double buffer{0.001};
         double dist_apart{0};
         dist_apart = Vec3::norm(sphere1->getPosition()-sphere2->getPosition());
-        if (dist_apart < sphere1->getRadius()+sphere2->getRadius()-buffer)
+        if (dist_apart < sphere1->getRadius()+sphere2->getRadius()+buffer)
         {
-            sphere1->handleSphereCollision(sphere2);
+            sphere1->handleSphereCollision(sphere2,m_boundary);
         }
     }
 
