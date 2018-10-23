@@ -58,19 +58,19 @@ namespace phys
         {
             dist_out = (m_position.getX()>0) ? m_position.getX()+m_radius-box->max_x : m_position.getX()-m_radius-box->min_x;
             m_position -= Vec3{dist_out,0,0};
-            m_velocity *= Vec3{-1,1,1}*m_coef_restitution;
+            m_velocity *= Vec3{-m_coef_restitution,1,1};
         }
         if (m_position.getY() > box->max_y-m_radius || m_position.getY() < box->min_y+m_radius)
         {
             dist_out = (m_position.getY()>0) ? m_position.getY()+m_radius-box->max_y : m_position.getY()-m_radius-box->min_y;
             m_position -= Vec3{0,dist_out,0};
-            m_velocity *= Vec3{1,-1,1}*m_coef_restitution;
+            m_velocity *= Vec3{1,-m_coef_restitution,1};
         }
         if (m_position.getZ() > box->max_z-m_radius || m_position.getZ() < box->min_z+m_radius)
         {
             dist_out = (m_position.getZ()>0) ? m_position.getZ()+m_radius-box->max_z : m_position.getZ()-m_radius-box->min_z;
             m_position -= Vec3{0,0,dist_out};
-            m_velocity *= Vec3{1,1,-1}*m_coef_restitution;
+            m_velocity *= Vec3{1,1,-m_coef_restitution};
         }
     }
 
@@ -163,8 +163,8 @@ namespace phys
         double m1_frac{2*m_mass/mass_sum};
         double m2_frac{2*other_sphere->m_mass/mass_sum};
         Vec3 projection{Vec3::dot(vel_diff,pos_diff)/Vec3::norm2(pos_diff)*pos_diff};
-        other_sphere->m_velocity = other_sphere->m_coef_restitution*(other_sphere->m_velocity-m1_frac*projection);
-        m_velocity = m_coef_restitution*(m_velocity+m2_frac*projection);
+        other_sphere->m_velocity = other_sphere->m_velocity-m1_frac*other_sphere->m_coef_restitution*projection;
+        m_velocity = m_velocity+m2_frac*m_coef_restitution*projection;
 
 //        Vec3 pos_diff{m_position-other_sphere->m_position};
 //        Vec3 vel_diff{m_velocity-other_sphere->m_velocity};
