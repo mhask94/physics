@@ -128,9 +128,29 @@ namespace phys
         double overlap{m_radius+other_sphere->m_radius-pos_diff_norm};
         Vec3 shift_dir{pos_diff/pos_diff_norm};
         if (Vec3::norm(other_sphere->m_velocity) > Vec3::norm(m_velocity))
-            other_sphere->m_position -= shift_dir*overlap;
+        {
+            other_sphere->m_position += shift_dir*overlap;
+            Vec3 abs_pos{Vec3::abs(other_sphere->m_position)};
+            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
+            {
+                double x = (abs_pos.getX() > 5) ? 5*other_sphere->m_position.signX() : other_sphere->m_position.getX();
+                double y = (abs_pos.getY() > 5) ? 5*other_sphere->m_position.signY() : other_sphere->m_position.getY();
+                double z = (abs_pos.getZ() > 5) ? 5*other_sphere->m_position.signZ() : other_sphere->m_position.getZ();
+                other_sphere->m_position = Vec3{x,y,z};
+            }
+        }
         else
-            m_position += shift_dir*overlap;
+        {
+            m_position -= shift_dir*overlap;
+            Vec3 abs_pos{Vec3::abs(m_position)};
+            if (abs_pos.getX() > 5 || abs_pos.getY() > 5 || abs_pos.getZ() > 5)
+            {
+                double x = (abs_pos.getX() > 5) ? 5*m_position.signX() : m_position.getX();
+                double y = (abs_pos.getY() > 5) ? 5*m_position.signY() : m_position.getY();
+                double z = (abs_pos.getZ() > 5) ? 5*m_position.signZ() : m_position.getZ();
+                m_position = Vec3{x,y,z};
+            }
+        }
 
         // Update velocities
         pos_diff = other_sphere->m_position-m_position;

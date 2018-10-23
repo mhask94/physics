@@ -112,9 +112,10 @@ namespace phys
 
     void World::checkForSphereCollision(Sphere *sphere1, Sphere *sphere2)
     {
+        double buffer{0.001};
         double dist_apart{0};
         dist_apart = Vec3::norm(sphere1->getPosition()-sphere2->getPosition());
-        if (dist_apart < sphere1->getRadius()+sphere2->getRadius())
+        if (dist_apart < sphere1->getRadius()+sphere2->getRadius()-buffer)
         {
             sphere1->handleSphereCollision(sphere2);
         }
