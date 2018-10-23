@@ -6,7 +6,7 @@ namespace phys
         m_radius{radius},
         m_mass{mass},
         m_position{position},
-        m_frontal_area{3.14159*radius*radius}
+        m_frontal_area{pi*radius*radius}
     {
         m_drag_coef = m_drag_coef*m_frontal_area;
     }
@@ -16,7 +16,7 @@ namespace phys
         m_mass{mass},
         m_position{position},
         m_velocity{velocity},
-        m_frontal_area{3.14159*radius*radius}
+        m_frontal_area{pi*radius*radius}
     {
         m_drag_coef = m_drag_coef*m_frontal_area;
     }
@@ -26,7 +26,7 @@ namespace phys
         m_mass{mass},
         m_position{position},
         m_coef_restitution{c_r},
-        m_frontal_area{3.14159*radius*radius}
+        m_frontal_area{pi*radius*radius}
     {
         m_drag_coef = m_drag_coef*m_frontal_area;
     }
@@ -37,13 +37,20 @@ namespace phys
         m_position{position},
         m_velocity{velocity},
         m_coef_restitution{c_r},
-        m_frontal_area{3.14159*radius*radius}
+        m_frontal_area{pi*radius*radius}
     {
         m_drag_coef = m_drag_coef*m_frontal_area;
     }
 
     Sphere::~Sphere()
     {
+        m_radius = 0;
+        m_mass = 0;
+//        m_position{0,0,0};
+//        m_velocity{0,0,0};
+        m_coef_restitution = 0;
+        m_frontal_area = 0;
+        m_drag_coef = 0;
     }
 
     void Sphere::handleBoundaryCollision(Boundary* box)
@@ -115,18 +122,43 @@ namespace phys
 
     void Sphere::handleSphereCollision(Sphere *other_sphere)
     {
-        Vec3 pos_diff{m_position-other_sphere->m_position};
-        Vec3 vel_diff{m_velocity-other_sphere->m_velocity};
-        double mass_sum{m_mass+other_sphere->m_mass};
-        double m2_frac{2*other_sphere->m_mass/mass_sum};
-        double m1_frac{2*m_mass/mass_sum};
-        Vec3 projection{Vec3::dot(vel_diff,pos_diff)/Vec3::norm2(pos_diff)*pos_diff};
-        m_velocity = m_coef_restitution*(m_velocity-m2_frac*projection);
-        other_sphere->m_velocity = other_sphere->m_coef_restitution*(other_sphere->m_velocity+m1_frac*projection);
+        // Get rid of overlap first
+        Vec3 pos_diff{other_sphere->m_position-m_position};
+        double pos_diff_norm{Vec3::norm(pos_diff)};
+        double overlap{m_radius+other_sphere->m_radius-pos_diff_norm};
+        Vec3 shift_dir{pos_diff/pos_diff_norm};
+        if (Vec3::norm(other_sphere->m_velocity) > Vec3::norm(m_velocity))
+            other_sphere->m_position -= shift_dir*overlap;
+        else
+            m_position += shift_dir*overlap;
 
-        double overlap{m_radius+other_sphere->m_radius-Vec3::norm(pos_diff)};
+        // Update velocities
+        pos_diff = other_sphere->m_position-m_position;
+        Vec3 vel_diff{other_sphere->m_velocity-m_velocity};
+        double mass_sum{m_mass+other_sphere->m_mass};
+        double m1_frac{2*m_mass/mass_sum};
+        double m2_frac{2*other_sphere->m_mass/mass_sum};
+        Vec3 projection{Vec3::dot(vel_diff,pos_diff)/Vec3::norm2(pos_diff)*pos_diff};
+        other_sphere->m_velocity = other_sphere->m_coef_restitution*(other_sphere->m_velocity-m1_frac*projection);
+        m_velocity = m_coef_restitution*(m_velocity+m2_frac*projection);
+
+//        Vec3 pos_diff{m_position-other_sphere->m_position};
+//        Vec3 vel_diff{m_velocity-other_sphere->m_velocity};
+//        double mass_sum{m_mass+other_sphere->m_mass};
+//        double m2_frac{2*other_sphere->m_mass/mass_sum};
+//        double m1_frac{2*m_mass/mass_sum};
+//        Vec3 projection{Vec3::dot(vel_diff,pos_diff)/Vec3::norm2(pos_diff)*pos_diff};
+//        m_velocity = m_coef_restitution*(m_velocity-m2_frac*projection);
+//        other_sphere->m_velocity = other_sphere->m_coef_restitution*(other_sphere->m_velocity+m1_frac*projection);
+
+//        Vec3 shift_dir{pos_diff/Vec3::norm(pos_diff)};
+//        double overlap{m_radius+other_sphere->m_radius-Vec3::norm(pos_diff)};
+//        double radius_sum{this->m_radius+other_sphere->m_radius};
+//        m_position += shift_dir*overlap*other_sphere->m_radius/radius_sum;
+//        other_sphere->m_position += shift_dir*overlap*m_radius/radius_sum;
+
 //        other_sphere->m_position += other_sphere->m_velocity/Vec3::norm(other_sphere->m_velocity)*overlap;
-        m_position += m_velocity/Vec3::norm(m_velocity)*overlap;
+//        m_position += m_velocity/Vec3::norm(m_velocity)*overlap;
     }
 
     double Sphere::getMass() const

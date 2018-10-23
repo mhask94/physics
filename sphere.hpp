@@ -32,6 +32,8 @@ namespace phys
         double m_drag_coef{0.15};
         void handleBoundaryCollision(Boundary* box);
     };
+
+    static double pi{3.14159};
 }
 
 #endif // SPHERE_HPP

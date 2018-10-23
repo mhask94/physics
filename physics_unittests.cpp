@@ -194,7 +194,9 @@ TEST(World,AskedForNumberOfSpheres_ReturnsCorrectNumber)
     double mass{1};
     phys::Vec3 init_pos{0,0,0};
     phys::Sphere *sphere{nullptr};
+    phys::Sphere *sphere2{nullptr};
     sphere = new phys::Sphere{radius,mass,init_pos};
+    sphere2 = new phys::Sphere{radius,mass,init_pos};
 
     phys::World world;
 
@@ -204,11 +206,12 @@ TEST(World,AskedForNumberOfSpheres_ReturnsCorrectNumber)
 
     EXPECT_EQ(1,world.getNumSpheres());
 
-    world.addSphere(sphere);
+    world.addSphere(sphere2);
 
     EXPECT_EQ(2,world.getNumSpheres());
 
     delete sphere;
+    delete sphere2;
 }
 
 TEST(WorldWithNoGravityOrDensity,AskedToUpdate_UpdatesAllShperesCorrectly)

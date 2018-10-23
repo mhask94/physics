@@ -42,7 +42,8 @@ namespace phys
         if (m_boundary != nullptr)
             delete m_boundary;
         m_boundary = nullptr;
-        this->clearWorld();
+//        if (m_num_spheres > 0)
+//            this->clearWorld();
     }
 
     Vec3 World::getGravity() const
@@ -78,12 +79,15 @@ namespace phys
 
     void World::update()
     {
-        for (unsigned int i{0}; i < m_num_spheres; i++)
+        if (m_num_spheres > 0)
         {
-            this->updateDynamics(m_spheres[i]);
-            if (i>0)
-                for (int j{i-1}; j >= 0; j--)
-                    this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
+            for (int i{0}; i < m_num_spheres; i++)
+            {
+                this->updateDynamics(m_spheres[i]);
+                if (i>0)
+                    for (int j{i-1}; j >= 0; j--)
+                        this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
+            }
         }
     }
 
