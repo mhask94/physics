@@ -371,6 +371,14 @@ TEST(WorldWithSphereAtBoundary,AskedToUpdate_CollisionOccursProperly)
     delete sphere4;
 }
 
+// PROF MCBRIDE - You wanted me to remind you of the email I sent you about how I tried
+// updating the physics/collisions in multiple ways. I changed from how I did it to
+// update all of the spheres physics first, then check for collisions, but this caused
+// problems for me. To handle spheres spawning in a collision when the user decides where
+// to put the sphere, I allow them to force the collision to happen in a warning message
+// box. If I update how you did, and how I believe you wanted me to, it caused problems
+// if the user place 2 spheres in the same location. So I switched back to how I updated.
+// This fixed my problems. Sorry if you wanted to compare it to yours easier.
 TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursProperly)
 {
     double radius1{1};
@@ -399,7 +407,7 @@ TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursPro
     phys::Vec3 expected_vel2{2.266666,0,0};
 
     phys::Vec3 expected_pos1{-1.25,0,0};
-    phys::Vec3 expected_pos2{0.47666,0,0};
+    phys::Vec3 expected_pos2{0.476666,0,0};
 
     double buffer{0.00001};
 
