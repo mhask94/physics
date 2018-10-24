@@ -120,6 +120,13 @@ namespace phys
         }
     }
 
+    void World::handleInitialSphereCollisions(Sphere* new_sphere)
+    {
+        if (m_num_spheres > 0)
+            for (int i{0}; i < m_num_spheres; i++)
+                new_sphere->handleSphereOverlap(m_spheres[i]);
+    }
+
     void World::setBoundary(Boundary *boundary)
     {
         m_boundary = boundary;

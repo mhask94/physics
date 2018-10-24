@@ -45,6 +45,7 @@ namespace phys
         void update();
         void updateDynamics(Sphere* sphere);
         void checkForSphereCollision(Sphere* sphere1,Sphere* sphere2);
+        void handleInitialSphereCollisions(Sphere* new_sphere);
         void clearWorld();
 
     protected:
