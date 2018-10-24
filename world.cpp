@@ -124,7 +124,25 @@ namespace phys
     {
         if (m_num_spheres > 0)
             for (int i{0}; i < m_num_spheres; i++)
-                new_sphere->handleSphereOverlap(m_spheres[i]);
+            {
+                double dist_apart{0};
+                dist_apart = Vec3::norm(new_sphere->getPosition()-m_spheres[i]->getPosition());
+                if (dist_apart < new_sphere->getRadius()+m_spheres[i]->getRadius())
+                    m_spheres[i]->handleInitialSphereOverlap(new_sphere,m_boundary);
+            }
+    }
+
+    bool World::collidesWithOtherSphere(Sphere* new_sphere)
+    {
+        if (m_num_spheres > 0)
+            for (int i{0}; i < m_num_spheres; i++)
+            {
+                double dist_apart{0};
+                dist_apart = Vec3::norm(new_sphere->getPosition()-m_spheres[i]->getPosition());
+                if (dist_apart < new_sphere->getRadius()+m_spheres[i]->getRadius())
+                    return true;
+            }
+        return false;
     }
 
     void World::setBoundary(Boundary *boundary)

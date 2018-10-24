@@ -155,6 +155,21 @@ namespace phys
         this->handleCollisionVelocities(other_sphere);
     }
 
+    void Sphere::handleInitialSphereOverlap(Sphere *new_sphere,Boundary* box)
+    {
+        Vec3 pos_diff{new_sphere->m_position-m_position};
+        double pos_diff_norm{Vec3::norm(pos_diff)};
+        double overlap{m_radius+new_sphere->m_radius-pos_diff_norm};
+        Vec3 shift_dir{0,0,0};
+        if (pos_diff_norm != 0)
+            shift_dir = pos_diff/pos_diff_norm;
+        else
+            shift_dir = Vec3{1,0,0};
+        new_sphere->m_position += shift_dir*overlap;
+        if (new_sphere->isNearWall(box))
+            new_sphere->m_position -= 2*shift_dir*overlap;
+    }
+
     double Sphere::getMass() const
     {
         return m_mass;

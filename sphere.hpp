@@ -21,7 +21,7 @@ namespace phys
         double getRadius() const;
         bool isNearWall(Boundary* box);
         void handleSphereCollision(Sphere* other_sphere,Boundary* box=nullptr);
-        void handleSphereOverlap(Sphere* other_sphere);
+        void handleInitialSphereOverlap(Sphere* new_sphere,Boundary* box);
 
     private:
         double m_radius{0};
@@ -33,6 +33,7 @@ namespace phys
         double m_drag_coef{0.15};
         void handleBoundaryCollision(Boundary* box);
         void handleCollisionVelocities(Sphere* other_sphere);
+        void handleSphereOverlap(Sphere* other_sphere);
     };
 
     static double pi{3.14159};
