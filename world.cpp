@@ -82,23 +82,12 @@ namespace phys
             for (int i{0}; i < m_num_spheres; i++)
             {
                 this->updateDynamics(m_spheres[i]);
-//                if (i>0)
-//                    for (int j{i-1}; j >= 0; j--)
-//                        this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
                 for (int j{0}; j < m_num_spheres; j++)
                 {
                     if (i!=j)
                         this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
                 }
             }
-//            for (int i{0}; i < m_num_spheres; i++)
-//            {
-//                for (int j{0}; j < m_num_spheres; j++)
-//                {
-//                    if (i!=j)
-//                        this->checkForSphereCollision(m_spheres[i],m_spheres[j]);
-//                }
-//            }
         }
     }
 

@@ -111,15 +111,25 @@ TEST(TwoVec3s,AskedToTakeDotProduct_ReturnsCorrectValue)
     EXPECT_EQ(expected_value,c);
 }
 
-//TEST(Vec3,AskedForNorm_ReturnsNorm)
-//{
-//    phys::Vec3 a{-1,0,3};
-//    double norm_a{phys::Vec3::norm(a)};
+TEST(Vec3,AskedForNorm_ReturnsNorm)
+{
+    phys::Vec3 a{-1,2,-2};
+    double norm_a{phys::Vec3::norm(a)};
 
-//    double expected_value{10};
+    double expected_value{3};
 
-//    EXPECT_EQ(expected_value,norm_a);
-//}
+    EXPECT_EQ(expected_value,norm_a);
+}
+
+TEST(Vec3,AskedForNormSquared_ReturnsNormSquared)
+{
+    phys::Vec3 a{-1,0,3};
+    double norm2_a{phys::Vec3::norm2(a)};
+
+    double expected_value{10};
+
+    EXPECT_EQ(expected_value,norm2_a);
+}
 
 TEST(SphereWith0VelocityAnd0Acceleration,AskedToUpdate_InitialPosition)
 {
@@ -385,13 +395,11 @@ TEST(WorldWith0AccelerationAnd2SpheresColliding,AskedToUpdate_CollisionOccursPro
     world.addSphere(sphere2);
     world.update();
 
-    phys::Vec3 expected_vel1{-.4,0,0};
-    phys::Vec3 expected_vel2{2.666666,0,0};
-    expected_vel1 = cr1*(init_vel1-(2*mass2*phys::Vec3::dot(init_vel1-init_vel2,init_pos1-init_pos2)/((mass1+mass2)*phys::Vec3::dot(init_pos1-init_pos2,init_pos1-init_pos2)))*(init_pos1-init_pos2));
-    expected_vel2 = cr2*(init_vel2-(2*mass1*phys::Vec3::dot(init_vel2-init_vel1,init_pos2-init_pos1)/((mass1+mass2)*phys::Vec3::dot(init_pos2-init_pos1,init_pos2-init_pos1)))*(init_pos2-init_pos1));
+    phys::Vec3 expected_vel1{0.4,0,0};
+    phys::Vec3 expected_vel2{2.266666,0,0};
 
-    phys::Vec3 expected_pos1{-0.3,0,0};
-    phys::Vec3 expected_pos2{1.2,0,0};
+    phys::Vec3 expected_pos1{-1.25,0,0};
+    phys::Vec3 expected_pos2{0.47666,0,0};
 
     double buffer{0.00001};
 

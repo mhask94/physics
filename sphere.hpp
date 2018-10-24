@@ -31,6 +31,8 @@ namespace phys
         double m_frontal_area{0};
         double m_drag_coef{0.15};
         void handleBoundaryCollision(Boundary* box);
+        void handleSphereOverlap(Sphere* other_sphere);
+        void handleCollisionVelocities(Sphere* other_sphere);
     };
 
     static double pi{3.14159};
